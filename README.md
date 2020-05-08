@@ -1,21 +1,7 @@
 Requerimientos de software
 python 3.5
 Django 2.2
-*Se cuenta con pantallas de inicio
-*Pantalla de agregar usuarios y editar
-*Pantalla de edición de lineas
-*Conexión pantalla de lineas con base de datos
-*
 
-Instalar virtualenv
-
-sudo apt-get install python-virtualenv virtualenv
-o
-pip install virtualenv
-
-Para iniciarlizarlo
-
-virtualenv env --python=python3
 Instalar dependencias
 
 Instalar mysqlclient
@@ -24,13 +10,61 @@ sudo apt-get install python3-dev
 sudo apt-get install python-dev default-libmysqlclient-dev
 pip install mysqlclient
 
+**Instalar django
+python3 -m pip install django
+
 Instalar wsgi
 
 pip install mod-wsgi
 sudo apt-get install libapache2-mod-wsgi-py3
 
-Instalar matploblib
-pip install matplotlib
+**Poner en produccion con Apache y wsgi**
+** instalar apache 
+sudo apt-get install apache2
 
-Install opencv
-pip install opencv-contrib-python
+** Instalar wsgi
+sudo apt-get install libapache2-mod-wsgi-py3
+
+** Instalar virtualenv
+python3 -m pip install virtualenv
+
+**crear entorno virtual
+virtualenv nombredelentorno --python=python3
+
+**clonar repositorio dentro de carpeta creada de env
+git clone https://github.com/isssss13/dosificacion.git
+
+configurar /etc/apache2/sites-available
+si se va a utilizar para el servidor se configura de la siguiente manera en el archivo 000-config
+*****************************************************************************************************
+<VirtualHost *:80>
+    Alias /static /home/server/env/dosificacion/dosificacion/static #Apuntar a carpeta static
+    <Directory /home/server/env/dosificacion/dosificacion/static> #Apuntar a carpeta static
+        Require all granted
+    </Directory>
+
+    <Directory /home/server/env/dosificacion/dosMetro> #Apuntar a carpeta donde se encuentra el archivo wsgi
+        <Files wsgi.py>
+            Require all granted
+        </Files>
+    </Directory>
+
+        WSGIDaemonProcess dosmetro python-path=/home/server/env:/home/server/env/lib/python3.6/site-packages
+        WSGIProcessGroup dosmetro
+        WSGIScriptAlias / /home/server/env/dosificacion/dosMetro/wsgi.py
+
+        ServerAdmin webmaster@localhost
+        
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+
+# vim: syntax=apache ts=4 sw=4 sts=4 sr noet
+****************************************************************************************************
+
+**Configurar en wsgi la linea sys.path.append ingresar la direccion de la carpeta donde se aloga el sistema
+
+**configurar settings.py la linea ALLOWED_HOSTS ingresando la direccion ip del servidor
+
+**Reinicia apache
+sudo systemctl restart apache2
