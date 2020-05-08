@@ -1,0 +1,42 @@
+{% include 'modales/addusuarios.html' %}
+<div class="bg border-right" id="sidebar-wrapper">
+    <div class="sidebar-heading" style="cursor: pointer" id="perfil">MI PERFIL</div>
+    <div class="list-group list-group-flush">
+        <div class="dropdown">
+            {% if user.is_staff %}
+            <a class="list-group-item list-group-item-action" data-toggle="collapse" href="#listaAdministracion" role="button" aria-expanded="false" aria-controls="listaAdministracion">
+                Administrar
+            </a>
+            <div class="collapse" id="listaAdministracion">
+                <div class="card card-body lista1" >
+                    <button type="button" class="dropdown-item" data-toggle="modal" data-target="#newUsuarios">
+                        Agregar usuarios
+                    </button>
+                    <!-- <a class="dropdown-item" href="% url 'dosificacion:administrador' %">Agregar Usuarios</a> -->
+                    <a class="dropdown-item" href="{% url 'dosificacion:estaciones' %}">Administrar Lineas</a>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        <div>
+            {% for lineas in datos %}
+                <div class="dropdown ">                    
+                    <a class="list-group-item list-group-item-action" data-toggle="collapse" href="#estaciones{{ lineas.id }}" role="button" aria-expanded="false" aria-controls="listalineas{{ lineas.id }}">
+                        {{ lineas.nombreLinea }}
+                    </a>
+                    <div class="collapse" id="estaciones{{ lineas.id }}">
+                        <div class="card card-body lista1" >
+                            {% for estacion in estaciones %}
+                                {% if estacion.statusSistema %}
+                                    {% ifequal estacion.id_linea_id lineas.id %}
+                                        <a class="dropdown-item" href="{% url 'dosificacion:graficas' estacion.id %}" style="background-color:#f48405;">{{ estacion.estacion }}</a>
+                                    {% endifequal %}     
+                                {% endif %}
+                            {% endfor %}                                                   
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>

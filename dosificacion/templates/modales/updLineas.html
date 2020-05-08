@@ -1,0 +1,62 @@
+<div class="modal fade" id="updLineas" tabindex="-1" role="dialog" aria-labelledby="actualizarLineas" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered " role="document">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color: #333333;color: #ffffff;">
+          <h5 class="modal-title" id="editUsuariosLongTitle">Editar Estacion</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form action="{% url 'dosificacion:actLineas'%}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="id_Estacion" id="idEstacion">
+            <input type="hidden" name="id_Linea" id="idLinea">
+            <div class="modal-body" style="align-items: center;">
+                <div class="row align-items-center adduser">
+                    <div class="col-5" style="text-align: right;">
+                        <label class="control-label" for="nombre">Nombre Estacion:</label>
+                    </div>
+                    <div class="col-5">
+                        <input type="text" name="nombreEstacion" id="nombreEstacion" required>
+                    </div>
+                </div>
+                <div class="row align-items-center adduser">
+                    <div class="col-5" style="text-align: right;">
+                        <label class="control-label" for="nombre">Camara 1:</label>
+                    </div>
+                    <div class="col-5">
+                        
+                        <input type="text" name="camara1" id="camara1" required>
+                    </div>
+                </div>
+                <div class="row align-items-center adduser">
+                    <div class="col-5" style="text-align: right;">
+                        <label class="control-label" for="nombre">Camara 2:</label>
+                    </div>
+                    <div class="col-5">
+                        
+                        <input type="text" name="camara2" id="camara2">
+                    </div>
+                </div>
+                <div class="row align-items-center adduser">
+                    <div class="col-5" style="text-align: right;">
+                        <label class="control-label" for="nombre">Status del sistema:</label>
+                    </div>
+                    <div class="col-5">
+                        <select name="status" id="status" required>
+                            <option value="1">Activado</option>
+                            <option value="0">Desactivado</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="background-color: #333333;color: #ffffff;">
+                <button class="btn btn-light" data-toggle="modal" data-dismiss="modal">
+                    Cerrar
+                </button>
+                <input type="submit" class="btn btn-primary" value="Actualizar">
+            </div>
+        </form>
+      </div>
+    </div>
+</div>

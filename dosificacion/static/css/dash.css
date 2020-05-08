@@ -1,0 +1,58 @@
+body{
+    background-color: #333333;    
+}
+
+.dropdown-item:hover{
+    background-color: #c46a04;
+}
+
+.adduser{
+    margin-top: 30px;
+}
+
+.loginContainer{
+    background-color: #f48405;
+    padding-left: 28%;
+    padding-right: 28%;
+    padding-bottom: 2%;
+    padding-top: 2%;
+}
+
+.cuadro{
+    padding-top: 5%;
+    padding-bottom: 5%;
+    background-color: aliceblue;
+}
+
+.lista1{
+    background-color:#f48405;
+    padding-right: 0%;
+    padding-left: 0%;
+    padding-top: 0%;
+    padding-bottom: 0%;
+}
+
+.imgbar{    
+    width: 100%;
+}
+
+.btn{
+    margin-right: 10px;
+}
+
+.inicio{
+    background-color: #f48405;
+}
+
+.list-group-item{
+    background-color: #f48405;
+}
+
+footer{
+    background-color: #333333;
+    text-align: center;
+}
+
+#page-content-wrapper{
+    background-color: #ffffff;
+}

@@ -1,0 +1,32 @@
+{% load static %}
+<header>
+    <!-- <nav class="row navbar navbar-expand-lg navbar-light  border-bottom" style="padding-left:0;padding-right: 0;"> -->
+    <nav class="flex-column flex-md-row bd-navbar navbar navbar-expand-lg navbar-dark bg-dark border-bottom">
+        <a href="/" class="navbar-brand mr-0 mr-md-2" style="width: 20%;">
+            <img src="{% static 'img/LogoCDMX.png' %}" class="hide-from-desktop" style="width:80%; padding-top: 1%;margin-right: 3%;">
+            <img src="{% static 'img/metro-logo.png' %}" class="hide-from-desktop" style="width:20%; padding-top: 1%;margin-right: 3%;">
+        </a>
+        <div class="row" style="width: 100%;margin-right: 0%;margin-left: 0%;">
+            <div class="col-3">
+                <button class="btn btn-primary" id="menu-toggle">Menu</button>
+            </div>
+            <div class="col-6" style="color: #ffffff;">
+                <p class="h4" style="text-align:center;">{{nombre}}</p>
+            </div>
+            <div class="col-3">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto mt-2 mt-lg-0" >
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'dosificacion:logout' %}" style="color: #f48405;">
+                                Cerrar sesion
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>

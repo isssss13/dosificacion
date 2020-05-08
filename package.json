@@ -1,0 +1,30 @@
+{
+  "name": "dosificacion",
+  "version": "1.0.0",
+  "description": "programa de dosificacion",
+  "main": "index.js",
+  "repository": "git+https://github.com/isssss13/dosificacion.git",
+  "author": "Ivan Sanchez Ramos <ivan.mcr.swami@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "webpack --watch --mode development",
+    "build": "webpack --watch --mode production"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.6",
+    "@babel/plugin-transform-async-to-generator": "^7.8.3",
+    "@babel/plugin-transform-runtime": "^7.9.0",
+    "@babel/polyfill": "^7.8.7",
+    "@babel/preset-env": "^7.9.6",
+    "babel-loader": "^8.1.0",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11"
+  },
+  "dependencies": {
+    "jquery": "^3.4.1",
+    "raphael": "^2.3.0",
+    "morris.js": "^0.5.0",
+    "sweetalert2": "^9.10.12"
+  }
+}

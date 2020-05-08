@@ -1,0 +1,62 @@
+<div class="modal fade" id="newUsuarios" tabindex="-1" role="dialog" aria-labelledby="newUsuariosTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color: #333333;color: #ffffff;">
+          <h5 class="modal-title" id="newUsuariosLongTitle">Agregar Usuarios</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form method="POST">
+            <div class="modal-body">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-2"></div>
+                    <div class="col-3" style="text-align: right;">
+                        <label for="username">Usuario:</label>
+                    </div>
+                    <div class="col-5" style="text-align: center;">
+                        <input type="text" name="username" id="id_username" required autofocus maxlength="150">
+                    </div>
+                    <div class="col-2"></div>
+                </div>
+                <div class="row">
+                    <div class="col-2"></div>
+                    <div class="col-3" style="text-align: right;">
+                        <label for="password1">Contraseña:</label>
+                    </div>
+                    <div class="col-5">
+                        <input type="password" name="password1" required id="id_password1" aria-autocomplete="list">
+                    </div>
+                    <div class="col-2"></div>
+                </div>
+                <div class="row">
+                    <div class="col-2"></div>
+                    <div class="col-3" style="text-align: right;">
+                        <label for="password2">Confirmar contraseña:</label>
+                    </div>
+                    <div class="col-5">
+                        <input type="password" name="password2" required id="id_password2">
+                    </div>                    
+                    <div class="col-2"></div>
+                </div>
+                <!-- <div class="row">
+                    <div class="col-2"></div>
+                    <div class="col-3">
+                        <label for="area" style="text-align: right;">Area:</label>
+                    </div>
+                    <div class="col-5">
+                         Area 
+                    </div>
+                    <div class="col-2"></div>
+                </div> -->
+            </div>
+            <div class="modal-footer" style="background-color: #333333;color: #ffffff;">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+              <button type="button" class="btn btn-secondary">Limpiar</button>
+              <input type="submit" class="btn btn-primary" value="Agregar">
+            </div>
+        </form>
+      </div>
+    </div>
+</div>

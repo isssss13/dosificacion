@@ -1,0 +1,83 @@
+{% extends "plantilla.html" %}
+{% load static %}
+{% block content %}
+{% if datos %}
+    <div class="content" style="padding-top: 2%;">    
+        <div class="row" style="padding-bottom: 2%;">
+            <div class="col-8">                    
+                <input class="form-control" id="myInput" type="text" placeholder="Buscar en la tabla">
+            </div>
+            <div class="col-4">                    
+                <button>Agregar</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col table-responsive-lg">
+                <table class="table" style="width: 100%;text-align: center;">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>ID</th>
+                            <th>Nombre de la estacion</th>
+                            <th>Status Sistema de dosificacion</th>
+                            <th>Ip Camara 1</th>
+                            <th>Ip Camara 2</th>
+                            <th>Afluencia</th>
+                            <th>Editar</th>
+                        </tr>
+                    </thead>
+                    <tbody id="myTable">
+                        {% for estacion in estaciones %}
+                            {% if estacion.statusSistema %}
+                                <tr style="background-color:#f48405;">
+                            {% else %}
+                                <tr>
+                            {% endif %}
+                                <td></td>
+                                <td>{{ estacion.id }}</td>
+                                <td>{{ estacion.estacion }}</td>
+                                {% if estacion.statusSistema %}
+                                    <td>Activo</td>
+                                {% else %}
+                                    <td>Desactivado</td>
+                                {% endif %}
+                                <td>{{ estacion.ip_camara1 }}</td>
+                                <td>{{ estacion.ip_camara2 }}</td>
+                                <td>{{ estacion.afluencia }}</td>
+                                <td style="width: 3%;padding-top: 1%;padding-bottom: 1%;">
+                                    <button class="btn btn-primary" onclick="editEstacion('{{ estacion.id }}','{{ estacion.estacion }}','estacion.statusSistema','{{ estacion.id_linea_id}}','{{ estacion.ip_camara1 }}','{{ estacion.ip_camara2 }}')" data-toggle="modal" data-target="#updLineas">
+                                        <img src="{% static 'img/edit.png'%}" style="width: 100%;">
+                                    </button>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {% include 'modales/updLineas.html' %}
+    <script>
+        editEstacion=function(id,nombre,status,idLinea,cam1,cam2){
+            $('#idEstacion').val(id);
+            $('#idLinea').val(idLinea);
+            $('#nombreEstacion').val(nombre);
+            $('#status').val(status);
+            $('#camara1').val(cam1);
+            $('#camara2').val(cam2);
+    }
+  </script>
+    <script>
+        $(document).ready(function(){
+          $("#myInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function() {
+              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+          });
+        });
+    </script>
+{% else %}
+    <p>Sin lineas por el momento</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends "plantilla.html" %}
+{% load static %}
+
+{% block librerias %}
+
+<link rel="stylesheet" href="{% static 'css/morris.css' %}">
+<script>
+    const flujo=[
+        { hour: '{{ fechaaxis1|safe }}', value: '{{ data1|safe}}' },
+        { hour: '{{ fechaaxis2|safe }}', value: '{{ data2|safe}}' },
+        { hour: '{{ fechaaxis3|safe }}', value: '{{ data3|safe}}' },
+        { hour: '{{ fechaaxis4|safe }}', value: '{{ data4|safe}}' },
+        { hour: '{{ fechaaxis5|safe }}', value: '{{ data5|safe}}' },
+        { hour: '{{ fechaaxis6|safe }}', value: '{{ data6|safe}}' },
+        { hour: '{{ fechaaxis7|safe }}', value: '{{ data7|safe}}' },
+        { hour: '{{ fechaaxis8|safe }}', value: '{{ data8|safe}}' },
+        { hour: '{{ fechaaxis9|safe }}', value: '{{ data9|safe}}' },
+        { hour: '{{ fechaaxis10|safe }}', value: '{{ data10|safe}}' },
+        { hour: '{{ fechaaxis11|safe }}', value: '{{ data11|safe}}' },
+        { hour: '{{ fechaaxis12|safe }}', value: '{{ data12|safe}}' },
+    ];
+    const trenes=[
+        { date: '{{ fechaTren1|safe }}', value: '{{ grafTren1|safe}}' },
+        { date: '{{ fechaTren2|safe }}', value: '{{ grafTren2|safe}}' },
+        { date: '{{ fechaTren3|safe }}', value: '{{ grafTren3|safe}}' },
+        { date: '{{ fechaTren4|safe }}', value: '{{ grafTren4|safe}}' },
+        { date: '{{ fechaTren5|safe }}', value: '{{ grafTren5|safe}}' },
+        { date: '{{ fechaTren6|safe }}', value: '{{ grafTren6|safe}}' },
+        { date: '{{ fechaTren7|safe }}', value: '{{ grafTren7|safe}}' },
+    ]
+</script>
+<script src="{% static 'js/raphael.min.js' %}"></script>
+<!-- <script src="% static 'js/morris.min.js' %"></script> -->
+<script src="{% static 'js/graficas.js' %}"></script>
+
+{% endblock %}
+{% block title%}
+    {{ nombre }}
+{% endblock %}
+{% block content %}
+<div class="content">
+    <div class="row text-center">
+        <div class="col-md-6">
+            <div class="card-body">
+                    <p class="card-title">Informacion del servicio</p>
+                    <div class="card-text" id="informacion">
+                        {% if data1 >= 90 or data2 >= 90 or data3 >= 90 %}
+                            <p>Mal</p>
+                            <img src="{% static 'img/Mal.png' %}" alt="">
+                            <h6><br>Se recomienda el envio de trenes vacios a la estacion para regular la demanda</h6>
+                        {% elif data1 >= 50 or data2 >= 50 or data3 >= 50 %}
+                            <p>Regular</p>
+                            <img src="{% static 'img/Regular.png' %}" alt="">
+                        {% else %}
+                            <p>Correcta</p>
+                            <img src="{% static 'img/Correcto.png' %}" alt="">
+                        {% endif %}
+                    </div class="card-title">
+                    <p>Informacion de la Estacion</p>
+                    <div class="card-text">
+                        <p>Camara 1: {{ ipcamara1 }}</p>
+                        <p>Camara 2: {{ ipcamara2 }}</p>
+                    </div>
+                </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card-body">
+                <p class="card-title">Flujo de trenes</p>
+                <div class="card-text" id="Trenes"></div>
+            </div>
+        </div>
+    </div>
+    <div class="row text-center">
+        <div class="col-md-12">
+            <div class="card-body">
+                <p class="card-title">Flujo de Usuarios</p>
+                <div class="card-text" id="FlujoDeUsuarios"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
