@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Requerimientos de software
 python 3.5
 Django 2.2
@@ -34,3 +35,11 @@ pip install matplotlib
 
 Install opencv
 pip install opencv-contrib-python
+=======
+Sistema de flujo de personas
+Se requiere Numpy, CV2 y mysql.connector
+
+El principal es Flujo1.py si se maneja una sola camara para el conteo
+Se activa la segunda camara se debe de correr Flujo2.py
+
+>>>>>>> flujo
