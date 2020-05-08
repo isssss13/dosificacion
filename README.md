@@ -68,3 +68,10 @@ si se va a utilizar para el servidor se configura de la siguiente manera en el a
 
 **Reinicia apache
 sudo systemctl restart apache2
+
+**Crear migraciones**
+python3 manage.py makemigrations dosificacion
+python3 manage.py migrate
+
+**Crear superusuario**
+python3 manage.py createsuperuser
