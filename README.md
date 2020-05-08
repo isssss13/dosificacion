@@ -38,12 +38,12 @@ configurar /etc/apache2/sites-available
 si se va a utilizar para el servidor se configura de la siguiente manera en el archivo 000-config
 *****************************************************************************************************
 <VirtualHost *:80>
-    Alias /static /home/server/env/dosificacion/dosificacion/static #Apuntar a carpeta static
-    <Directory /home/server/env/dosificacion/dosificacion/static> #Apuntar a carpeta static
+    Alias /static /home/server/env/dosificacion/dosificacion/static
+    <Directory /home/server/env/dosificacion/dosificacion/static>
         Require all granted
     </Directory>
 
-    <Directory /home/server/env/dosificacion/dosMetro> #Apuntar a carpeta donde se encuentra el archivo wsgi
+    <Directory /home/server/env/dosificacion/dosMetro>
         <Files wsgi.py>
             Require all granted
         </Files>
@@ -59,7 +59,6 @@ si se va a utilizar para el servidor se configura de la siguiente manera en el a
         CustomLog ${APACHE_LOG_DIR}/access.log combined
 </VirtualHost>
 
-# vim: syntax=apache ts=4 sw=4 sts=4 sr noet
 ****************************************************************************************************
 
 **Configurar en wsgi la linea sys.path.append ingresar la direccion de la carpeta donde se aloga el sistema
