@@ -1,3 +1,5 @@
+import 'morris.js/morris'
+
 $(document).ready(function(){
     flujoUsuarios(flujo);
     flujoTrenes(trenes);
