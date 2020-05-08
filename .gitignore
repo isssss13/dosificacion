@@ -1,3 +1,8 @@
 src/
 webpack.config.js
 babel.config.json
+node_modules
+__pycache__
+migrations
+package-lock.json
+yarn.lock
