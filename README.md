@@ -49,14 +49,15 @@ si se va a utilizar para el servidor se configura de la siguiente manera en el a
         </Files>
     </Directory>
 
-        WSGIDaemonProcess dosmetro python-path=/home/server/env:/home/server/env/lib/python3.6/site-packages
-        WSGIProcessGroup dosmetro
-        WSGIScriptAlias / /home/server/env/dosificacion/dosMetro/wsgi.py
+    WSGIDaemonProcess dosmetro python-path=/home/server/env:/home/server/env/lib/python3.6/site-packages
+    WSGIProcessGroup dosmetro
+    WSGIScriptAlias / /home/server/env/dosificacion/dosMetro/wsgi.py
 
-        ServerAdmin webmaster@localhost
+    ServerAdmin webmaster@localhost
         
-        ErrorLog ${APACHE_LOG_DIR}/error.log
-        CustomLog ${APACHE_LOG_DIR}/access.log combined
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+
 </VirtualHost>
 
 ****************************************************************************************************
