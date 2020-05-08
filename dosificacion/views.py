@@ -14,10 +14,9 @@ def createUser(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Your password was updated successfully!')
-            print("ok")
+            messages.success(request, 'Usuario creado correctamente')
         else:
-            print("error")
+            messages.error(request, 'Error al crear el usuario')
 
 def logout(request):
     do_logout(request)
@@ -48,39 +47,41 @@ def login(request):
     # Si llegamos al final renderizamos el formulario
     return render(request, "registration/login.html", {'form': form})
 
+datos=linea.objects.order_by('id')# pylint: disable=no-member
+estacion=estaciones.objects.order_by('id')# pylint: disable=no-member
+context={
+    'nombre':'Administrar lineas',
+    'datos':datos,
+    'estaciones':estacion,
+}
 
 def index(request):
     createUser(request)
-    # form.fields['username'].help_text = None
-    # form.fields['password1'].help_text = None
-    # form.fields['password2'].help_text = None
     if request.user.is_authenticated:
-        estacion=estaciones.objects.order_by('id')# pylint: disable=no-member
-        datos=linea.objects.order_by('id')# pylint: disable=no-member
         context={
-            'nombre':'Principal-Dosificacion',
-            'estaciones':estacion,
+            'nombre':'Principal- Dosificacion',
             'datos':datos,
+            'estaciones':estacion,
         }
         return render(request,'plantilla.html',context)
     return redirect('/login')
 
 
-def administracion(request):    
-    estacion=estaciones.objects.order_by('id')# pylint: disable=no-member
-    datos=linea.objects.order_by('id')# pylint: disable=no-member
-    context={
-        'nombre':'Administrar usuarios',
-        'estaciones':estacion,
-        'datos':datos,
-    }
-    if request.user.is_authenticated:        
-        return render(request,'pages/usuarios.html',context)
-    return redirect('/login')
+# def administracion(request):    
+#     estacion=estaciones.objects.order_by('id')# pylint: disable=no-member
+#     datos=linea.objects.order_by('id')# pylint: disable=no-member
+#     context={
+#         'nombre':'Administrar usuarios',
+#         'estaciones':estacion,
+#         'datos':datos,
+#     }
+#     if request.user.is_authenticated:        
+#         return render(request,'pages/usuarios.html',context)
+#     return redirect('/login')
+
 
 def lineas(request):
-    datos=linea.objects.order_by('id')# pylint: disable=no-member
-    estacion=estaciones.objects.order_by('id')# pylint: disable=no-member
+    createUser(request)
     context={
             'nombre':'Administrar lineas',
             'datos':datos,
@@ -91,14 +92,13 @@ def lineas(request):
     return redirect('/login')
 
 def uptLineas(request):
+    createUser(request)
     statusSistema=request.POST['status']
     idEstacion=request.POST['id_Estacion']
     if request.method== 'POST':
         estacion=estaciones.objects.get(pk=idEstacion)# pylint: disable=no-member
         estacion.statusSistema=statusSistema
         estacion.save()        
-    datos=linea.objects.order_by('id')# pylint: disable=no-member
-    estacion=estaciones.objects.order_by('id')# pylint: disable=no-member
     context={
         'nombre':'Administrar lineas',
         'datos':datos,
@@ -109,30 +109,30 @@ def uptLineas(request):
     return redirect('/login')
 
 def graficasEstacion(request,idEstacion):
+    createUser(request)
     estacion=estaciones.objects.get(pk=idEstacion)# pylint: disable=no-member
     datos=linea.objects.order_by('id')# pylint: disable=no-member
-    trenes=Trenes.objects.filter(id_estacion=idEstacion).order_by('-id')# pylint: disable=no-member
     grafica=HistoricoAfluencia.objects.all().filter(id_estacion=idEstacion).order_by('-id')[:12]# pylint: disable=no-member
-    
-    fechaTren=[
-        trenes[0].fecha,
-        trenes[1].fecha,
-        trenes[2].fecha,
-        trenes[3].fecha,
-        trenes[4].fecha,
-        trenes[5].fecha,
-        trenes[6].fecha,
-    ]
+    # trenes=Trenes.objects.filter(id_estacion=idEstacion).order_by('-id')# pylint: disable=no-member
+    # fechaTren=[
+    #     trenes[0].fecha,
+    #     trenes[1].fecha,
+    #     trenes[2].fecha,
+    #     trenes[3].fecha,
+    #     trenes[4].fecha,
+    #     trenes[5].fecha,
+    #     trenes[6].fecha,
+    # ]
 
-    grafTren=[
-        trenes[0].conteoTrenes,
-        trenes[1].conteoTrenes,
-        trenes[2].conteoTrenes,
-        trenes[3].conteoTrenes,
-        trenes[4].conteoTrenes,
-        trenes[5].conteoTrenes,
-        trenes[6].conteoTrenes,
-    ]
+    # grafTren=[
+    #     trenes[0].conteoTrenes,
+    #     trenes[1].conteoTrenes,
+    #     trenes[2].conteoTrenes,
+    #     trenes[3].conteoTrenes,
+    #     trenes[4].conteoTrenes,
+    #     trenes[5].conteoTrenes,
+    #     trenes[6].conteoTrenes,
+    # ]
     
     fechaa=[
         grafica[0].fecha.strftime('%Y-%m-%d %H:%M'),
@@ -189,21 +189,21 @@ def graficasEstacion(request,idEstacion):
         'data11':graf[10],
         'data12':graf[11],
 
-        'fechaTren1':fechaTren[0],
-        'fechaTren2':fechaTren[1],
-        'fechaTren3':fechaTren[2],
-        'fechaTren4':fechaTren[3],
-        'fechaTren5':fechaTren[4],
-        'fechaTren6':fechaTren[5],
-        'fechaTren7':fechaTren[6],
+        # 'fechaTren1':fechaTren[0],
+        # 'fechaTren2':fechaTren[1],
+        # 'fechaTren3':fechaTren[2],
+        # 'fechaTren4':fechaTren[3],
+        # 'fechaTren5':fechaTren[4],
+        # 'fechaTren6':fechaTren[5],
+        # 'fechaTren7':fechaTren[6],
 
-        'grafTren1':grafTren[0],
-        'grafTren2':grafTren[1],
-        'grafTren3':grafTren[2],
-        'grafTren4':grafTren[3],
-        'grafTren5':grafTren[4],
-        'grafTren6':grafTren[5],
-        'grafTren7':grafTren[6],
+        # 'grafTren1':grafTren[0],
+        # 'grafTren2':grafTren[1],
+        # 'grafTren3':grafTren[2],
+        # 'grafTren4':grafTren[3],
+        # 'grafTren5':grafTren[4],
+        # 'grafTren6':grafTren[5],
+        # 'grafTren7':grafTren[6],
         'nombre':'Estadisticas '+estacion.estacion,
         'ipcamara1':estacion.ip_camara1,
         'ipcamara2':estacion.ip_camara2,

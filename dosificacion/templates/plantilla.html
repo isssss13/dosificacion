@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="{% static 'css/style.css'%}">
         <script src="{% static 'js/jquery.min.js' %}"></script>
         <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
         {% block librerias %}
         {% endblock %}
     </head>
@@ -23,7 +24,12 @@
                 <div id="page-content-wrapper">
                     {% if messages %}
                         {% for message in messages %}
-                                <script>alert("Usuario Creado")</script>
+                        <script>
+                            Swal.fire({
+                                icon: '{{ message.tags }}',
+                                title: '{{ message }}'
+                            })
+                        </script>
                         {% endfor %}
                     {% endif %}
                     
@@ -34,6 +40,7 @@
             </div>
             {% include 'modales/editusuario.html' %}
             {% include 'modales/miperfil.html' %}
+            {% include 'modales/addusuarios.html' %}
         </section>
         {% include 'footer.html' %}
         <!-- Menu Toggle Script -->
