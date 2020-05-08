@@ -7,3 +7,4 @@ migrations
 package-lock.json
 yarn.lock
 Estaciones.sql
+flujohistorico.sql
