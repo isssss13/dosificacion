@@ -32,3 +32,15 @@ $("#addEstacion").on('click',(e) =>{
     $("#addLinea").modal('show');
     
 });
+
+$("#perfil").on('click',() =>{
+    $("#userPerfil").modal('show');    
+});
+
+$("#editDatos").on('click',() =>{
+    $("#editUsuarios").modal('show');    
+});
+
+$("#pass").on('click',() =>{
+    $("#changepass").modal('show');    
+});

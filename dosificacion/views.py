@@ -5,7 +5,6 @@ from django.urls import reverse
 from django.contrib.auth import logout as do_logout,authenticate,login as do_login
 from django.contrib.auth.forms import AuthenticationForm,UserCreationForm
 from django.contrib.auth.models import User
-from django.contrib import messages
 
 from .models import linea,estaciones,HistoricoAfluencia,Trenes
 
@@ -234,13 +233,13 @@ def uptLineas(request):
             estacion=estaciones.objects.get(pk=idEstacion)# pylint: disable=no-member
             estacion.statusSistema=statusSistema
             estacion.save()
-            messages.success(request, 'Estacion actualizada correctamente!')
             return HttpResponseRedirect(reverse('dosificacion:estaciones'))
         else:
-            messages.error(request, 'Error al actualizar!')
             return HttpResponseRedirect(reverse('dosificacion:estaciones'))
     return redirect('/login')
 
+
+# vistas para actualiza y editar 
 
 def addEstacion(request):
     linea=request.POST['lineaAdd']
@@ -255,25 +254,55 @@ def addEstacion(request):
         messages.error(request, 'Error al crear estacion!')
         return HttpResponseRedirect(reverse('dosificacion:estaciones'))
 
-# def delEstacion(request,idEstacion):
-#     estacion=estaciones.objects.get(pk=idEstacion)# pylint: disable=no-member
+
 
 def createUser(request):
     nickname=request.POST.get('nickname')
-    correo='ivan.mcr.swami@gmail-com'
-    passw='12345'    
+    correo=request.POST.get('correo')
+    passw='12345'
+    staff=request.POST.get('permisos')
     if request.method == "POST":
         try:
             user=User.objects.create_user(nickname,correo,passw)
-            user.save()
-            return JsonResponse({'resultado':"success",'text':"Usuario creado correctamente"})
+            if staff=='1':
+                user.is_staff=True
+                user.save()
+                return JsonResponse({'resultado':"success",'text':"Usuario administrador correctamente"})
+            else:
+                user.save()
+                return JsonResponse({'resultado':"success",'text':"Usuario creado correctamente"})
         except:
             return JsonResponse({'resultado':"error",'text':"Error al crear usuario"})
-    # form = UserCreationForm()
-    # if request.method == "POST":
-    #     form = UserCreationForm(request.POST)
-    #     if form.is_valid():
-    #         form.save()
-    #         messages.success(request, 'Usuario creado correctamente')
-    #     else:
-    #         messages.error(request, 'Error al crear el usuario')
+
+def editUser(request):
+    usuario=request.POST.get('username')
+    nombre=request.POST.get('nombre')
+    apellidos=request.POST.get('apellidos')
+    correo=request.POST.get('correo')
+    staff=request.POST.get('permisos')
+    if request.method == "POST":
+        try:
+            user=User.objects.get(username=usuario)
+            user.first_name=nombre
+            user.last_name=apellidos
+            user.email=correo
+            if staff=='1':
+                user.is_staff=True
+            else:
+                user.is_staff=False
+            user.save()
+            return JsonResponse({'resultado':"success",'text':"Datos actualizados correctamente"})
+        except:
+            return JsonResponse({'resultado':"error",'text':"Error al actualizar"})
+
+def changePass(request):
+    usuario=request.POST.get('username')
+    passnew=request.POST.get('pass')
+    if request.method == "POST":
+        try:
+            user=User.objects.get(username=usuario)
+            user.set_password(passnew)
+            user.save()
+            return JsonResponse({'resultado':"success",'text':"Contraseña cambiada por favor inicie sesion nuevamente"})
+        except:
+            return JsonResponse({'resultado':"error",'text':"Error al actualizar"})

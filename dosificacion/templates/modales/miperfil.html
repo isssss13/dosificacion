@@ -13,17 +13,37 @@
                 <div class="row align-items-center">
                     <div class="col-1"></div>
                     <div class="col-5" style="text-align: center;">
-                        <label for="">Nombre</label>
+                        <label for="">Nombre(s)</label>
                     </div>
                     <div class="col-5" style="text-align: left;">
-                        <p>Nombre</p>
+                        <p>{{ user.first_name }}</p>
                     </div>
                     <div class="col-1"></div>
                 </div>
                 <div class="row align-items-center">
                     <div class="col-1"></div>
                     <div class="col-5" style="text-align: center;">
-                        <label for="">Usuario</label>
+                        <label for="">Apellidos</label>
+                    </div>
+                    <div class="col-5" style="text-align: left;">
+                        <p>{{ user.last_name }}</p>
+                    </div>
+                    <div class="col-1"></div>
+                </div>
+                <div class="row align-items-center">
+                    <div class="col-1"></div>
+                    <div class="col-5" style="text-align: center;">
+                        <label for="">Correo</label>
+                    </div>
+                    <div class="col-5" style="text-align: left;">
+                        <p>{{ user.email }}</p>
+                    </div>
+                    <div class="col-1"></div>
+                </div>
+                <div class="row align-items-center">
+                    <div class="col-1"></div>
+                    <div class="col-5" style="text-align: center;">
+                        <label for="">Nickname</label>
                     </div>
                     <div class="col-5" style="text-align: left;">
                         <p>{{ user.username }}</p>
@@ -33,17 +53,25 @@
                 <div class="row align-items-center">
                     <div class="col-1"></div>
                     <div class="col-5" style="text-align: center;">
-                        <label for="">Area</label>
+                        <label for="">Permisos</label>
                     </div>
                     <div class="col-5" style="text-align: left;">
-                        <p>{{ user.profile.Area }}</p>
+                        {% if user.is_staff %}
+                            <p>Administrador</p>
+                        {% else%}
+                            <p>Personal</p>
+                        {% endif %}
                     </div>
                     <div class="col-1"></div>
+
                 </div>
             </div>
         </div>
             <div class="modal-footer" style="background-color: #333333;color: #ffffff;">
-                <button class="btn btn-light" data-toggle="modal" data-target="#editUsuarios" data-dismiss="modal">
+                <button class="btn btn-light" id="pass" data-dismiss="modal">
+                    Cambiar Contraseña
+                </button>
+                <button class="btn btn-light" id="editDatos" data-dismiss="modal">
                     Editar Datos
                 </button>
                 <button class="btn btn-primary" data-dismiss="modal">Aceptar</button>

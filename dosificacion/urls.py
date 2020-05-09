@@ -5,7 +5,9 @@ from . import views
 app_name='dosificacion'
 urlpatterns = [
     path('', views.index, name='index'),
-    path('addusuarios', views.createUser, name='createUser'),
+    path('addusuarios', views.createUser),
+    path('passupd', views.changePass),
+    path('editusuarios', views.editUser),
     path('lineas', views.lineas, name='estaciones'),
     path('updLineas', views.uptLineas, name='actLineas'),
     path('addEstacion', views.addEstacion, name='addEstacion'),

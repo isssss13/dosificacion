@@ -21,18 +21,7 @@
         <section>
             <div class="d-flex" id="wrapper">            
                 {% include 'sidebar.html' %}
-                <div id="page-content-wrapper">
-                    {% if messages %}
-                        {% for message in messages %}
-                        <script>
-                            Swal.fire({
-                                icon: '{{ message.tags }}',
-                                title: '{{ message }}'
-                            })
-                        </script>
-                        {% endfor %}
-                    {% endif %}
-                    
+                <div id="page-content-wrapper">                    
                     {% block content %}
                         
                     {% endblock %}
@@ -44,5 +33,71 @@
         </section>
         {% include 'footer.html' %}
         <script src="{% static 'js/funciones.js' %}"></script>
+        <script>
+            $("#addUsuarios").on('click',(e) =>{
+                $.ajax({
+                    method:"POST",
+                    url:"/addusuarios",
+                    headers: {'X-CSRFToken': '{{ csrf_token }}'},
+                    data:"nickname="+$('#id_username').val()+"&correo="+$('#correo').val()+"&permisos="+$('#permisos').val(),
+                    success:function(r){
+                        Swal.fire({
+                            icon: r.resultado,
+                            title: r.text,
+                        })
+                    }
+                });
+
+            });
+
+            $('#editUsuario').on('click',()=>{
+                $.ajax({
+                    method:"POST",
+                    url:"/editusuarios",
+                    headers: {'X-CSRFToken': '{{ csrf_token }}'},
+                    data:"username={{ user.username }}"+
+                        "&nombre="+$('#nombre_E').val()+
+                        "&apellidos="+$('#app_E').val()+
+                        "&correo="+$('#correo_E').val()+
+                        "&permisos="+$('#permisos_E').val(),
+                    success:function(r){
+                        Swal.fire({
+                            icon: r.resultado,
+                            title: r.text,
+                        })
+                    }
+                });
+            })
+
+            $('#updatePass').on('click',()=>{
+                let pass=$('#password').val()
+                let passconf=$('#passwordconf').val()
+                if (pass==passconf){
+                    $.ajax({
+                        method:"POST",
+                        url:"/passupd",
+                        headers: {'X-CSRFToken': '{{ csrf_token }}'},
+                        data:"username={{ user.username }}"+
+                            "&pass="+pass,
+                        success:function(r){
+                            Swal.fire({
+                                icon: r.resultado,
+                                title: r.text,
+                            }).then((result)=>{
+                                $(location).attr('href',"/logout");
+                            })
+                        }
+                    });
+                }else{
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Contraseñas no coinciden',
+                    })        
+                }
+
+                
+            })
+            
+        </script>
     </body>
 </html>
