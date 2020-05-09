@@ -1,9 +1,10 @@
-from django.http import HttpResponse,HttpResponseRedirect
+from django.http import HttpResponse,HttpResponseRedirect,JsonResponse
 from django.shortcuts import get_object_or_404,render,redirect
 from django.template import loader
 from django.urls import reverse
 from django.contrib.auth import logout as do_logout,authenticate,login as do_login
 from django.contrib.auth.forms import AuthenticationForm,UserCreationForm
+from django.contrib.auth.models import User
 from django.contrib import messages
 
 from .models import linea,estaciones,HistoricoAfluencia,Trenes
@@ -254,12 +255,25 @@ def addEstacion(request):
         messages.error(request, 'Error al crear estacion!')
         return HttpResponseRedirect(reverse('dosificacion:estaciones'))
 
+# def delEstacion(request,idEstacion):
+#     estacion=estaciones.objects.get(pk=idEstacion)# pylint: disable=no-member
+
 def createUser(request):
-    form = UserCreationForm()
+    nickname=request.POST.get('nickname')
+    correo='ivan.mcr.swami@gmail-com'
+    passw='12345'    
     if request.method == "POST":
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Usuario creado correctamente')
-        else:
-            messages.error(request, 'Error al crear el usuario')
+        try:
+            user=User.objects.create_user(nickname,correo,passw)
+            user.save()
+            return JsonResponse({'resultado':"success",'text':"Usuario creado correctamente"})
+        except:
+            return JsonResponse({'resultado':"error",'text':"Error al crear usuario"})
+    # form = UserCreationForm()
+    # if request.method == "POST":
+    #     form = UserCreationForm(request.POST)
+    #     if form.is_valid():
+    #         form.save()
+    #         messages.success(request, 'Usuario creado correctamente')
+    #     else:
+    #         messages.error(request, 'Error al crear el usuario')

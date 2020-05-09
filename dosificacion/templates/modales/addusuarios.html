@@ -9,14 +9,13 @@
         </div>
         <form method="POST">
             <div class="modal-body">
-                {% csrf_token %}
                 <div class="row">
                     <div class="col-2"></div>
                     <div class="col-3" style="text-align: right;">
                         <label for="username">Usuario:</label>
                     </div>
                     <div class="col-5" style="text-align: center;">
-                        <input type="text" name="username" id="id_username" required autofocus maxlength="150">
+                        <input type="text" name="nickname" id="id_username" required autofocus maxlength="150">
                     </div>
                     <div class="col-2"></div>
                 </div>
@@ -43,9 +42,26 @@
             </div>
             <div class="modal-footer" style="background-color: #333333;color: #ffffff;">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-              <input type="submit" class="btn btn-primary" id="addUsuarios" value="Agregar">
+              <button type="button" class="btn btn-primary" id="addUsuarios" value="Agregar">Agregar</button>
             </div>
         </form>
       </div>
     </div>
 </div>
+<script>
+    $("#addUsuarios").on('click',(e) =>{
+    $.ajax({
+        method:"POST",
+        url:"/addusuarios",
+        headers: {'X-CSRFToken': '{{ csrf_token }}'},
+        data:"nickname="+$('#id_username').val(),
+        success:function(r){
+            Swal.fire({
+                icon: r.resultado,
+                title: r.text,
+            })
+        }
+    });
+    
+});
+</script>
