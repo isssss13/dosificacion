@@ -1,6 +1,6 @@
-{% include 'modales/addusuarios.html' %}
 <div class="bg border-right" id="sidebar-wrapper">
-    <div class="sidebar-heading" style="cursor: pointer" id="perfil">MI PERFIL</div>
+    <!-- <div class="sidebar-heading" style="cursor: pointer" id="perfil">MI PERFIL</div> -->
+    <div class="sidebar-heading" style="cursor: pointer" >MENU</div>
     <div class="list-group list-group-flush">
         <div class="dropdown">
             {% if user.is_staff %}
@@ -9,7 +9,7 @@
             </a>
             <div class="collapse" id="listaAdministracion">
                 <div class="card card-body lista1" >
-                    <button type="button" class="dropdown-item" data-toggle="modal" data-target="#newUsuarios">
+                    <button type="button" class="dropdown-item" id="agrUsuarios">
                         Agregar usuarios
                     </button>
                     <!-- <a class="dropdown-item" href="% url 'dosificacion:administrador' %">Agregar Usuarios</a> -->
@@ -29,7 +29,7 @@
                             {% for estacion in estaciones %}
                                 {% if estacion.statusSistema %}
                                     {% ifequal estacion.id_linea_id lineas.id %}
-                                        <a class="dropdown-item" href="{% url 'dosificacion:graficas' estacion.id %}" style="background-color:#f48405;">{{ estacion.estacion }}</a>
+                                        <a class="dropdown-item" href="{% url 'dosificacion:graficas' estacion.estacion %}" style="background-color:#f48405;">{{ estacion.estacion }}</a>
                                     {% endifequal %}     
                                 {% endif %}
                             {% endfor %}                                                   

@@ -5,10 +5,11 @@ from . import views
 app_name='dosificacion'
 urlpatterns = [
     path('', views.index, name='index'),
-    path('administrador', views.administracion, name='administrador'),
+    # path('administrador', views.administracion, name='administrador'),
     path('lineas', views.lineas, name='estaciones'),
     path('updLineas', views.uptLineas, name='actLineas'),
+    path('addEstacion', views.addEstacion, name='addEstacion'),
     path('login', views.login, name='login'),
     path('logout', views.logout,name='logout'),
-    path('graficas/<int:idEstacion>', views.graficasEstacion,name='graficas'),
+    path('graficas/<str:nameestacion>', views.graficasEstacion,name='graficas'),
 ]

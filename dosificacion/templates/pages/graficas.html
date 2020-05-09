@@ -19,18 +19,8 @@
         { hour: '{{ fechaaxis11|safe }}', value: '{{ data11|safe}}' },
         { hour: '{{ fechaaxis12|safe }}', value: '{{ data12|safe}}' },
     ];
-    const trenes=[
-        { date: '{{ fechaTren1|safe }}', value: '{{ grafTren1|safe}}' },
-        { date: '{{ fechaTren2|safe }}', value: '{{ grafTren2|safe}}' },
-        { date: '{{ fechaTren3|safe }}', value: '{{ grafTren3|safe}}' },
-        { date: '{{ fechaTren4|safe }}', value: '{{ grafTren4|safe}}' },
-        { date: '{{ fechaTren5|safe }}', value: '{{ grafTren5|safe}}' },
-        { date: '{{ fechaTren6|safe }}', value: '{{ grafTren6|safe}}' },
-        { date: '{{ fechaTren7|safe }}', value: '{{ grafTren7|safe}}' },
-    ]
 </script>
 <script src="{% static 'js/raphael.min.js' %}"></script>
-<!-- <script src="% static 'js/morris.min.js' %"></script> -->
 <script src="{% static 'js/graficas.js' %}"></script>
 
 {% endblock %}
@@ -63,17 +53,17 @@
                     </div>
                 </div>
         </div>
-        <div class="col-md-6">
+        <!-- <div class="col-md-6">
             <div class="card-body">
                 <p class="card-title">Flujo de trenes</p>
                 <div class="card-text" id="Trenes"></div>
             </div>
-        </div>
+        </div> -->
     </div>
     <div class="row text-center">
         <div class="col-md-12">
             <div class="card-body">
-                <p class="card-title">Flujo de Usuarios</p>
+                <h4 class="card-title">Flujo de Usuarios</h4>
                 <div class="card-text" id="FlujoDeUsuarios"></div>
             </div>
         </div>

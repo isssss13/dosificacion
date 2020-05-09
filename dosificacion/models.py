@@ -11,7 +11,6 @@ class linea(models.Model):
     no_estaciones=models.IntegerField(default=0)
 
 class estaciones(models.Model):
-    imagen=models.CharField(max_length=50)
     estacion=models.CharField(max_length=50)
     statusSistema=models.BooleanField()
     afluencia=models.CharField(max_length=200)
