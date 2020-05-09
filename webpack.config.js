@@ -1,7 +1,7 @@
 module.exports = {
 
     entry: {
-        graficas: './src/index.js'
+        graficas: './src/index.js',
     },
 
     output: {

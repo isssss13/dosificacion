@@ -43,16 +43,6 @@
             {% include 'modales/addusuarios.html' %}
         </section>
         {% include 'footer.html' %}
-        <!-- Menu Toggle Script -->
-        <script>
-            $("#menu-toggle").click(function(e) {
-                e.preventDefault();
-                $("#wrapper").toggleClass("toggled");
-            });
-
-            $("#perfil").on('click',()=>{
-                $('#userPerfil').modal('show')
-            })
-        </script>
+        <script src="{% static 'js/funciones.js' %}"></script>
     </body>
 </html>
