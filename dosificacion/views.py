@@ -5,6 +5,7 @@ from django.urls import reverse
 from django.contrib.auth import logout as do_logout,authenticate,login as do_login
 from django.contrib.auth.forms import AuthenticationForm,UserCreationForm
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
 from .models import linea,estaciones,HistoricoAfluencia,Trenes
 
@@ -43,47 +44,29 @@ datos=linea.objects.order_by('id')# pylint: disable=no-member
 estacion=estaciones.objects.order_by('id')# pylint: disable=no-member
 listLineas=linea.objects.order_by('id')# pylint: disable=no-member
 
+@login_required(login_url='/login')
 def index(request):
     createUser(request)
-    if request.user.is_authenticated:
-        context={
-            'nombre':'Principal- Dosificacion',
-            'datos':datos,
-            'estaciones':estacion,
-        }
-        return render(request,'plantilla.html',context)
-    return redirect('/login')
-
-
-# def administracion(request):    
-#     estacion=estaciones.objects.order_by('id')# pylint: disable=no-member
-#     datos=linea.objects.order_by('id')# pylint: disable=no-member
-#     context={
-#         'nombre':'Administrar usuarios',
-#         'estaciones':estacion,
-#         'datos':datos,
-#     }
-#     if request.user.is_authenticated:        
-#         return render(request,'pages/usuarios.html',context)
-#     return redirect('/login')
-
-
-def lineas(request):
-    createUser(request)
-    actestacion=estaciones.objects.order_by('id')# pylint: disable=no-member
     context={
-            'nombre':'Administrar lineas',
-            'datos':datos,
-            'estaciones':actestacion,
-            'lineas':listLineas,
+        'nombre':'Principal- Dosificacion',
+        'datos':datos,
+        'estaciones':estacion,
     }
-    if request.user.is_authenticated:
+    return render(request,'plantilla.html',context)
+
+@login_required(login_url='/login')
+def lineas(request):
+    if request.user.is_staff:
+        actestacion=estaciones.objects.order_by('id')# pylint: disable=no-member
+        context={
+                'nombre':'Administrar lineas',
+                'datos':datos,
+                'estaciones':actestacion,
+                'lineas':listLineas,
+        }
         return render(request,'pages/lineas.html',context)
-    return redirect('/login')
 
-
-
-
+@login_required(login_url='/login')
 def graficasEstacion(request,nameestacion):
     createUser(request)
     datosestacion=estaciones.objects.get(estacion=nameestacion)# pylint: disable=no-member
@@ -145,88 +128,12 @@ def graficasEstacion(request,nameestacion):
         'datos':datos,
         'estaciones':estacion,
     }
-    if request.user.is_authenticated:
-        return render(request,'pages/graficas.html',context)
-    return redirect('/login')
     
-    # datos=linea.objects.order_by('id')# pylint: disable=no-member
-    # grafica=HistoricoAfluencia.objects.all().filter(id_estacion=idname).order_by('-id')[:12]# pylint: disable=no-member
-    # trenes=Trenes.objects.filter(id_estacion=idEstacion).order_by('-id')# pylint: disable=no-member
-    # fechaTren=[
-    #     trenes[0].fecha,
-    #     trenes[1].fecha,
-    #     trenes[2].fecha,
-    #     trenes[3].fecha,
-    #     trenes[4].fecha,
-    #     trenes[5].fecha,
-    #     trenes[6].fecha,
-    # ]
+    return render(request,'pages/graficas.html',context)    
 
-    # grafTren=[
-    #     trenes[0].conteoTrenes,
-    #     trenes[1].conteoTrenes,
-    #     trenes[2].conteoTrenes,
-    #     trenes[3].conteoTrenes,
-    #     trenes[4].conteoTrenes,
-    #     trenes[5].conteoTrenes,
-    #     trenes[6].conteoTrenes,
-    # ]
-    
-    
-
-
-
-    # context
-    #     'fechaaxis1':fechaa[0],
-    #     'fechaaxis2':fechaa[1],
-    #     'fechaaxis3':fechaa[2],
-    #     'fechaaxis4':fechaa[3],
-    #     'fechaaxis5':fechaa[4],
-    #     'fechaaxis6':fechaa[5],
-    #     'fechaaxis7':fechaa[6],
-    #     'fechaaxis8':fechaa[7],
-    #     'fechaaxis9':fechaa[8],
-    #     'fechaaxis10':fechaa[9],
-    #     'fechaaxis11':fechaa[10],
-    #     'fechaaxis12':fechaa[11],
-    #     'data1':graf[0],
-    #     'data2':graf[1],
-    #     'data3':graf[2],
-    #     'data4':graf[3],
-    #     'data5':graf[4],
-    #     'data6':graf[5],
-    #     'data7':graf[6],
-    #     'data8':graf[7],
-    #     'data9':graf[8],
-    #     'data10':graf[9],
-    #     'data11':graf[10],
-    #     'data12':graf[11],
-
-        # 'fechaTren1':fechaTren[0],
-        # 'fechaTren2':fechaTren[1],
-        # 'fechaTren3':fechaTren[2],
-        # 'fechaTren4':fechaTren[3],
-        # 'fechaTren5':fechaTren[4],
-        # 'fechaTren6':fechaTren[5],
-        # 'fechaTren7':fechaTren[6],
-
-        # 'grafTren1':grafTren[0],
-        # 'grafTren2':grafTren[1],
-        # 'grafTren3':grafTren[2],
-        # 'grafTren4':grafTren[3],
-        # 'grafTren5':grafTren[4],
-        # 'grafTren6':grafTren[5],
-        # 'grafTren7':grafTren[6],
-        # 'nombre':'Estadisticas '+estacion.estacion,
-        # 'ipcamara1':estacion.ip_camara1,
-        # 'ipcamara2':estacion.ip_camara2,
-
-        # 'datos':datos,
-        # 'estaciones':estacioness,
-        # 'estacion':estacion,
-
+@login_required(login_url='/login')
 def uptLineas(request):
-    if request.user.is_authenticated:
+    if request.user.is_staff:
         statusSistema=request.POST['status']
         idEstacion=request.POST['id_Estacion']
         if request.method== 'POST':
@@ -236,44 +143,43 @@ def uptLineas(request):
             return HttpResponseRedirect(reverse('dosificacion:estaciones'))
         else:
             return HttpResponseRedirect(reverse('dosificacion:estaciones'))
-    return redirect('/login')
-
 
 # vistas para actualiza y editar 
 
+@login_required(login_url='/login')
 def addEstacion(request):
-    linea=request.POST['lineaAdd']
-    nombre=request.POST['nombreEstacionAdd']
-    status=request.POST['statusAdd']
-    if request.method== 'POST':
-        estacion=estaciones(estacion=nombre,statusSistema=status,id_linea_id=linea)
-        estacion.save()
-        messages.success(request, 'Estacion agregada correctamente!')
-        return HttpResponseRedirect(reverse('dosificacion:estaciones'))
-    else:
-        messages.error(request, 'Error al crear estacion!')
-        return HttpResponseRedirect(reverse('dosificacion:estaciones'))
+    if request.user.is_staff:
+        linea=request.POST['lineaAdd']
+        nombre=request.POST['nombreEstacionAdd']
+        status=request.POST['statusAdd']
+        if request.method== 'POST':
+            estacion=estaciones(estacion=nombre,statusSistema=status,id_linea_id=linea)
+            estacion.save()
+            return HttpResponseRedirect(reverse('dosificacion:estaciones'))
+        else:
+            return HttpResponseRedirect(reverse('dosificacion:estaciones'))
 
-
-
+@login_required(login_url='/login')
 def createUser(request):
-    nickname=request.POST.get('nickname')
-    correo=request.POST.get('correo')
-    passw='12345'
-    staff=request.POST.get('permisos')
-    if request.method == "POST":
-        try:
-            user=User.objects.create_user(nickname,correo,passw)
-            if staff=='1':
-                user.is_staff=True
-                user.save()
-                return JsonResponse({'resultado':"success",'text':"Usuario administrador correctamente"})
-            else:
-                user.save()
-                return JsonResponse({'resultado':"success",'text':"Usuario creado correctamente"})
-        except:
-            return JsonResponse({'resultado':"error",'text':"Error al crear usuario"})
+    if request.user.is_staff:
+        nickname=request.POST.get('nickname')
+        correo=request.POST.get('correo')
+        passw='12345'
+        staff=request.POST.get('permisos')
+        if request.method == "POST":
+            try:
+                user=User.objects.create_user(nickname,correo,passw)
+                if staff=='1':
+                    user.is_staff=True
+                    user.save()
+                    return JsonResponse({'resultado':"success",'text':"Usuario administrador correctamente"})
+                else:
+                    user.save()
+                    return JsonResponse({'resultado':"success",'text':"Usuario creado correctamente"})
+            except:
+                return JsonResponse({'resultado':"error",'text':"Error al crear usuario"})
 
+@login_required(login_url='/login')
 def editUser(request):
     usuario=request.POST.get('username')
     nombre=request.POST.get('nombre')
@@ -295,6 +201,7 @@ def editUser(request):
         except:
             return JsonResponse({'resultado':"error",'text':"Error al actualizar"})
 
+@login_required(login_url='/login')
 def changePass(request):
     usuario=request.POST.get('username')
     passnew=request.POST.get('pass')

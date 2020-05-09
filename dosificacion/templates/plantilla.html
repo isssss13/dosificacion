@@ -29,11 +29,14 @@
             </div>
             {% include 'modales/editusuario.html' %}
             {% include 'modales/miperfil.html' %}
-            {% include 'modales/addusuarios.html' %}
+            {% if user.is_staff %}
+                {% include 'modales/addusuarios.html' %}
+            {% endif %}
         </section>
         {% include 'footer.html' %}
         <script src="{% static 'js/funciones.js' %}"></script>
         <script>
+            {% if user.is_staff %}
             $("#addUsuarios").on('click',(e) =>{
                 $.ajax({
                     method:"POST",
@@ -47,9 +50,8 @@
                         })
                     }
                 });
-
             });
-
+            {% endif %}
             $('#editUsuario').on('click',()=>{
                 $.ajax({
                     method:"POST",
@@ -93,11 +95,8 @@
                         icon: 'warning',
                         title: 'Contraseñas no coinciden',
                     })        
-                }
-
-                
+                }   
             })
-            
         </script>
     </body>
 </html>
