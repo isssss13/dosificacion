@@ -1,4 +1,4 @@
-import 'morris.js/morris'
+import 'morris.js/morris.js'
 
 $(document).ready(function(){
     flujoUsuarios(flujo);
@@ -20,20 +20,20 @@ const flujoUsuarios = (flujo)=>{
         console.log(datos)
     });
 }
-const flujoTrenes= (trenes) => {
-    let datos=trenes
-    new Morris.Area({
-        element: 'Trenes',
-        data: trenes,
-        xkey: ['date'],
-        ykeys: ['value'],
-        xLabels:['day'],
-        labels: ['Trenes'],
-        gridTextColor:['#000000'],
-        lineColors:['#f48405'],
-    }).on('click',properties=>{
-        console.log(datos)
-    })
+// const flujoTrenes= (trenes) => {
+//     let datos=trenes
+//     new Morris.Area({
+//         element: 'Trenes',
+//         data: trenes,
+//         xkey: ['date'],
+//         ykeys: ['value'],
+//         xLabels:['day'],
+//         labels: ['Trenes'],
+//         gridTextColor:['#000000'],
+//         lineColors:['#f48405'],
+//     }).on('click',properties=>{
+//         console.log(datos)
+//     })
 
-}
+// }
 

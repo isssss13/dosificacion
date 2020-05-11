@@ -12,7 +12,6 @@
         <link rel="stylesheet" href="{% static 'css/style.css'%}">
         <script src="{% static 'js/jquery.min.js' %}"></script>
         <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
         {% block librerias %}
         {% endblock %}
     </head>
@@ -21,18 +20,7 @@
         <section>
             <div class="d-flex" id="wrapper">            
                 {% include 'sidebar.html' %}
-                <div id="page-content-wrapper">
-                    {% if messages %}
-                        {% for message in messages %}
-                        <script>
-                            Swal.fire({
-                                icon: '{{ message.tags }}',
-                                title: '{{ message }}'
-                            })
-                        </script>
-                        {% endfor %}
-                    {% endif %}
-                    
+                <div id="page-content-wrapper">                    
                     {% block content %}
                         
                     {% endblock %}
@@ -40,7 +28,9 @@
             </div>
             {% include 'modales/editusuario.html' %}
             {% include 'modales/miperfil.html' %}
-            {% include 'modales/addusuarios.html' %}
+            {% if user.is_staff %}
+                {% include 'modales/addusuarios.html' %}
+            {% endif %}
         </section>
         {% include 'footer.html' %}
         <script src="{% static 'js/funciones.js' %}"></script>

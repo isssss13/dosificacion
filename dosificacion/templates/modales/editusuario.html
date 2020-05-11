@@ -1,5 +1,5 @@
 <div class="modal fade" id="editUsuarios" tabindex="-1" role="dialog" aria-labelledby="editUsuariosTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header" style="background-color: #333333;color: #ffffff;">
           <h5 class="modal-title" id="editUsuariosLongTitle">Editar Usuario</h5>
@@ -7,48 +7,57 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form action="" method="post">
+        <form method="post" id="usuario_edit">
+            {% csrf_token %}
+            <input type="hidden" name="usuario_E" id="usuario_E" value="{{ user.id }}">
             <div class="modal-body" style="align-items: center;">
-                <div class="row align-items-center adduser">
-                    <div class="col-1" style="text-align: right;">
-                        <label class="control-label" for="nombre">Nombre:</label>
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-1"></div>
+                        <div class="col-5" style="text-align: center;">
+                            <label for="">Nombre(s)</label>
+                        </div>
+                        <div class="col-5" style="text-align: left;">
+                            <input type="text" name="nombre_E" id="nombre_E" value="{{ user.first_name }}">
+                        </div>
+                        <div class="col-1"></div>
                     </div>
-                    <div class="col-5">
-                        <input type="text" name="nombre">
+                    <div class="row align-items-center">
+                        <div class="col-1"></div>
+                        <div class="col-5" style="text-align: center;">
+                            <label for="">Apellidos</label>
+                        </div>
+                        <div class="col-5" style="text-align: left;">
+                            <input type="text" name="app_E" id="app_E" value="{{ user.last_name }}">
+                        </div>
+                        <div class="col-1"></div>
                     </div>
-                    <div class="col-2" style="text-align: right;">
-                        <label for="numero">No. Empleado:</label>
+                    <div class="row align-items-center">
+                        <div class="col-1"></div>
+                        <div class="col-5" style="text-align: center;">
+                            <label for="">Correo</label>
+                        </div>
+                        <div class="col-5" style="text-align: left;">
+                            <input type="email" name="correo_E" id="correo_E" value="{{ user.email }}">
+                        </div>
+                        <div class="col-1"></div>
                     </div>
-                    <div class="col-4">
-                        <input type="number" name="numero">
-                    </div>
-                </div>
-                <div class="row align-items-center adduser">
-                    <div class="col-1" style="text-align: right;">
-                        <label for="usuario">Usuario:</label>
-                    </div>
-                    <div class="col-5">    
-                        <input type="text" name="usuario">
-                    </div>
-                    <div class="col-2" style="text-align: right;">
-                        <label for="rol">Rol:</label>
-                    </div>
-                    <div class="col-4">
-                        <input type="text" name="rol">
-                    </div>
-                </div>
-                <div class="row align-items-center adduser">
-                    <div class="col-1" style="text-align: right;">
-                        <label for="pass">Contraseña:</label>
-                    </div>
-                    <div class="col-5">
-                        <input type="password" name="pass">
-                    </div>
-                    <div class="col-2" style="text-align: right;">
-                        <label for="confpass">Confirmar contraseña:</label>
-                    </div>
-                    <div class="col-4">
-                        <input type="password" name="confpass">
+                    <div class="row align-items-center">
+                        <div class="col-1"></div>
+                        <div class="col-5" style="text-align: center;">
+                            <label for="">Permisos</label>
+                        </div>
+                        <div class="col-5" style="text-align: left;">
+                            <select name="permisos_E" id="permisos_E">
+                                {% if user.is_staff %}
+                                    <option value="1" selected>Administrador</option>
+                                    <option value="0">Personal</option>
+                                {% else%}
+                                    <option value="0">Personal</option>
+                                {% endif %}                            
+                            </select>
+                        </div>
+                        <div class="col-1"></div>
                     </div>
                 </div>
             </div>
@@ -56,9 +65,57 @@
                 <button class="btn btn-light" data-toggle="modal" data-target="#userPerfil" data-dismiss="modal">
                     Cerrar
                 </button>
-                <input type="submit" class="btn btn-primary" value="Agregar">
+                <button type="button" class="btn btn-primary" id="editUsuario">Actualizar</button>
             </div>
         </form>
       </div>
+    </div>
+</div>
+
+<div class="modal fade" id="changepass" tabindex="-1" role="dialog" aria-labelledby="editUsuariosTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #333333;color: #ffffff;">
+                <h5 class="modal-title" id="editPassLongTitle">Cambiar contraseña</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="POST" id="editarContrasena">
+                {% csrf_token %}
+                <input type="hidden" name="usuario_pass_E" id="usuario_pass_E" value="{{ user.id }}">
+                <div class="modal-body" style="align-items: center;">
+                    <div class="container">
+                        <div class="row align-items-center">
+                            <div class="col-1"></div>
+                            <div class="col-5" style="text-align: center;">
+                                <label for="">Nueva contraseña</label>
+                            </div>
+                            <div class="col-5" style="text-align: left;">
+                                <input type="password" name="password" id="password">
+                            </div>
+                            <div class="col-1"></div>
+                        </div>
+                        <div class="row align-items-center">
+                            <div class="col-1"></div>
+                            <div class="col-5" style="text-align: center;">
+                                <label for="">Confirmar</label>
+                            </div>
+                            <div class="col-5" style="text-align: left;">
+                                <input type="password" name="passwordconf" id="passwordconf">
+                            </div>
+                            <div class="col-1"></div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+                
+            <div class="modal-footer" style="background-color: #333333;color: #ffffff;">
+                <button class="btn btn-light" data-toggle="modal" data-target="#userPerfil" data-dismiss="modal">
+                    Cerrar
+                </button>
+                <button type="button" class="btn btn-primary" id="updatePass">Actualizar</button>
+            </div>
+        </div>
     </div>
 </div>

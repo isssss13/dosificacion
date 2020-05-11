@@ -7,43 +7,47 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form method="POST">
+        <form method="POST" id="agregarUsuarios">
             <div class="modal-body">
-                {% csrf_token %}
                 <div class="row">
+                    {% csrf_token %}
                     <div class="col-2"></div>
                     <div class="col-3" style="text-align: right;">
                         <label for="username">Usuario:</label>
                     </div>
                     <div class="col-5" style="text-align: center;">
-                        <input type="text" name="username" id="id_username" required autofocus maxlength="150">
+                        <input type="text" name="nickname" id="id_username" required autofocus maxlength="150">
                     </div>
                     <div class="col-2"></div>
                 </div>
                 <div class="row">
                     <div class="col-2"></div>
                     <div class="col-3" style="text-align: right;">
-                        <label for="password1">Contraseña:</label>
+                        <label for="password1">Correo:</label>
                     </div>
                     <div class="col-5">
-                        <input type="password" name="password1" required id="id_password1" aria-autocomplete="list">
+                        <input type="email" name="correo" required id="correo" aria-autocomplete="list">
                     </div>
                     <div class="col-2"></div>
                 </div>
                 <div class="row">
                     <div class="col-2"></div>
                     <div class="col-3" style="text-align: right;">
-                        <label for="password2">Confirmar contraseña:</label>
+                        <label for="password1">Permisos:</label>
                     </div>
                     <div class="col-5">
-                        <input type="password" name="password2" required id="id_password2">
-                    </div>                    
+                        <select name="permisos" id="permisos">
+                            <option value="1">Administrador</option>
+                            <option value="2">Personal</option>
+                        </select>
+                    </div>
                     <div class="col-2"></div>
                 </div>
+                
             </div>
             <div class="modal-footer" style="background-color: #333333;color: #ffffff;">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-              <input type="submit" class="btn btn-primary" id="addUsuarios" value="Agregar">
+              <button type="button" class="btn btn-primary" id="addUsuarios" value="Agregar">Agregar</button>
             </div>
         </form>
       </div>

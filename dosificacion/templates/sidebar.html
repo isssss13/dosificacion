@@ -1,6 +1,10 @@
 <div class="bg border-right" id="sidebar-wrapper">
-    <!-- <div class="sidebar-heading" style="cursor: pointer" id="perfil">MI PERFIL</div> -->
-    <div class="sidebar-heading" style="cursor: pointer" >MENU</div>
+    <a class="list-group-item list-group-item-action" style="cursor: pointer;">
+        Bienvenido {{ user.first_name }}
+    </a>
+    <a class="list-group-item list-group-item-action" style="cursor: pointer;" id="perfil">
+        Mi Perfil
+    </a>
     <div class="list-group list-group-flush">
         <div class="dropdown">
             {% if user.is_staff %}
@@ -12,7 +16,6 @@
                     <button type="button" class="dropdown-item" id="agrUsuarios">
                         Agregar usuarios
                     </button>
-                    <!-- <a class="dropdown-item" href="% url 'dosificacion:administrador' %">Agregar Usuarios</a> -->
                     <a class="dropdown-item" href="{% url 'dosificacion:estaciones' %}">Administrar Lineas</a>
                 </div>
             </div>
