@@ -203,11 +203,11 @@ def editUser(request):
 
 @login_required(login_url='/login')
 def changePass(request):
-    usuario=request.POST.get('username')
-    passnew=request.POST.get('pass')
+    usuario=request.POST.get('usuario_pass_E')
+    passnew=request.POST.get('password')
     if request.method == "POST":
         try:
-            user=User.objects.get(username=usuario)
+            user=User.objects.get(pk=usuario)
             user.set_password(passnew)
             user.save()
             return JsonResponse({'resultado':"success",'text':"Contraseña cambiada por favor inicie sesion nuevamente"})

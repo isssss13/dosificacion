@@ -35,32 +35,6 @@
         {% include 'footer.html' %}
         <script src="{% static 'js/funciones.js' %}"></script>
         <script>
-            $('#updatePass').on('click',()=>{
-                let pass=$('#password').val()
-                let passconf=$('#passwordconf').val()
-                if (pass==passconf){
-                    $.ajax({
-                        method:"POST",
-                        url:"/passupd",
-                        headers: {'X-CSRFToken': '{{ csrf_token }}'},
-                        data:"username={{ user.username }}"+
-                            "&pass="+pass,
-                        success:function(r){
-                            Swal.fire({
-                                icon: r.resultado,
-                                title: r.text,
-                            }).then((result)=>{
-                                $(location).attr('href',"/logout");
-                            })
-                        }
-                    });
-                }else{
-                    Swal.fire({
-                        icon: 'warning',
-                        title: 'Contraseñas no coinciden',
-                    })        
-                }   
-            })
         </script>
     </body>
 </html>

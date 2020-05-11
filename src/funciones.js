@@ -71,6 +71,35 @@ $('#editUsuario').on('click',()=>{
                 icon: r.resultado,
                 title: r.text,
             })
+            if (r.resultado=='success'){
+                $('#editUsuarios').modal('hide');
+            }
         }
     });
 });
+
+$('#updatePass').on('click',()=>{
+    let pass=$('#password').val()
+    let passconf=$('#passwordconf').val()
+    if (pass==passconf){
+        $.ajax({
+            method:"POST",
+            url:"/passupd",
+            data:$('#editarContrasena').serialize(),
+            success:function(r){
+                Swal.fire({
+                    icon: r.resultado,
+                    title: r.text,
+                }).then((result)=>{
+                    $(location).attr('href',"/logout");
+                })
+            }
+        });
+    }else{
+        Swal.fire({
+            icon: 'warning',
+            title: 'Contraseñas no coinciden',
+        })        
+    }   
+});
+
