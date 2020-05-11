@@ -103,3 +103,20 @@ $('#updatePass').on('click',()=>{
     }   
 });
 
+$('#iniciarSesion').on('click',()=>{
+    $.ajax({
+        method:"POST",
+        url:"/initsesion",
+        data:$('#loginUsuario').serialize(),
+        success:function(r){
+            if (r.resultado=='success'){
+                $(location).attr('href',"/");
+            }else{
+                Swal.fire({
+                    icon: r.resultado,
+                    title: r.text,
+                })
+            }
+        }
+    });
+});

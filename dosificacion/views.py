@@ -12,37 +12,13 @@ from .models import linea,estaciones,HistoricoAfluencia,Trenes
 def logout(request):
     do_logout(request)
     return redirect('/login')
-userlog=0
-def login(request):
-    # Creamos el formulario de autenticación vacío
-    if request.user.is_authenticated:
-        return redirect('/')
-    form = AuthenticationForm()
-    if request.method == "POST":
-        # Añadimos los datos recibidos al formulario
-        form = AuthenticationForm(data=request.POST)
-        # Si el formulario es válido...
-        if form.is_valid():
-            # Recuperamos las credenciales validadas
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-
-            # Verificamos las credenciales del usuario
-            user = authenticate(username=username, password=password)
-
-            # Si existe un usuario con ese nombre y contraseña
-            if user is not None:
-                # Hacemos el login manualmente
-                do_login(request, user)
-                # Y le redireccionamos a la portada
-                return redirect('/')
-
-    # Si llegamos al final renderizamos el formulario
-    return render(request, "registration/login.html", {'form': form})
 
 datos=linea.objects.order_by('id')# pylint: disable=no-member
 estacion=estaciones.objects.order_by('id')# pylint: disable=no-member
 listLineas=linea.objects.order_by('id')# pylint: disable=no-member
+
+def login(request):
+    return render(request,'registration/login.html')
 
 @login_required(login_url='/login')
 def index(request):
@@ -213,3 +189,16 @@ def changePass(request):
             return JsonResponse({'resultado':"success",'text':"Contraseña cambiada por favor inicie sesion nuevamente"})
         except:
             return JsonResponse({'resultado':"error",'text':"Error al actualizar"})
+
+def iniciarSesion(request):
+    if request.user.is_authenticated:
+        return redirect('/')    
+    username = request.POST.get('username')
+    password = request.POST.get('password')
+    if request.method == "POST":
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            do_login(request, user)
+            return JsonResponse({'resultado':"success",'text':"Datos Correctos"})
+        else:
+            return JsonResponse({'resultado':"error",'text':"Error en los datos"})
