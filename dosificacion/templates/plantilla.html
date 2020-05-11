@@ -35,25 +35,6 @@
         {% include 'footer.html' %}
         <script src="{% static 'js/funciones.js' %}"></script>
         <script>
-            $('#editUsuario').on('click',()=>{
-                $.ajax({
-                    method:"POST",
-                    url:"/editusuarios",
-                    headers: {'X-CSRFToken': '{{ csrf_token }}'},
-                    data:"username={{ user.username }}"+
-                        "&nombre="+$('#nombre_E').val()+
-                        "&apellidos="+$('#app_E').val()+
-                        "&correo="+$('#correo_E').val()+
-                        "&permisos="+$('#permisos_E').val(),
-                    success:function(r){
-                        Swal.fire({
-                            icon: r.resultado,
-                            title: r.text,
-                        })
-                    }
-                });
-            })
-
             $('#updatePass').on('click',()=>{
                 let pass=$('#password').val()
                 let passconf=$('#passwordconf').val()

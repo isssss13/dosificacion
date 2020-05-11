@@ -60,3 +60,17 @@ $("#addUsuarios").on('click',(e) =>{
         }
     });
 });
+
+$('#editUsuario').on('click',()=>{
+    $.ajax({
+        method:"POST",
+        url:"/editusuarios",
+        data:$('#usuario_edit').serialize(),
+        success:function(r){
+            Swal.fire({
+                icon: r.resultado,
+                title: r.text,
+            })
+        }
+    });
+});

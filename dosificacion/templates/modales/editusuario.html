@@ -7,7 +7,9 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form method="post">
+        <form method="post" id="usuario_edit">
+            {% csrf_token %}
+            <input type="hidden" name="usuario_E" id="usuario_E" value="{{ user.id }}">
             <div class="modal-body" style="align-items: center;">
                 <div class="container">
                     <div class="row align-items-center">

@@ -12,7 +12,7 @@ from .models import linea,estaciones,HistoricoAfluencia,Trenes
 def logout(request):
     do_logout(request)
     return redirect('/login')
-
+userlog=0
 def login(request):
     # Creamos el formulario de autenticación vacío
     if request.user.is_authenticated:
@@ -181,14 +181,14 @@ def createUser(request):
 
 @login_required(login_url='/login')
 def editUser(request):
-    usuario=request.POST.get('username')
-    nombre=request.POST.get('nombre')
-    apellidos=request.POST.get('apellidos')
-    correo=request.POST.get('correo')
-    staff=request.POST.get('permisos')
+    id=request.POST.get('usuario_E')
+    nombre=request.POST.get('nombre_E')
+    apellidos=request.POST.get('app_E')
+    correo=request.POST.get('correo_E')
+    staff=request.POST.get('permisos_E')
     if request.method == "POST":
         try:
-            user=User.objects.get(username=usuario)
+            user=User.objects.get(pk=id)
             user.first_name=nombre
             user.last_name=apellidos
             user.email=correo
