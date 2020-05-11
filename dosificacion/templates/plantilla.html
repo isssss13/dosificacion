@@ -12,7 +12,6 @@
         <link rel="stylesheet" href="{% static 'css/style.css'%}">
         <script src="{% static 'js/jquery.min.js' %}"></script>
         <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
         {% block librerias %}
         {% endblock %}
     </head>
@@ -36,22 +35,6 @@
         {% include 'footer.html' %}
         <script src="{% static 'js/funciones.js' %}"></script>
         <script>
-            {% if user.is_staff %}
-            $("#addUsuarios").on('click',(e) =>{
-                $.ajax({
-                    method:"POST",
-                    url:"/addusuarios",
-                    headers: {'X-CSRFToken': '{{ csrf_token }}'},
-                    data:"nickname="+$('#id_username').val()+"&correo="+$('#correo').val()+"&permisos="+$('#permisos').val(),
-                    success:function(r){
-                        Swal.fire({
-                            icon: r.resultado,
-                            title: r.text,
-                        })
-                    }
-                });
-            });
-            {% endif %}
             $('#editUsuario').on('click',()=>{
                 $.ajax({
                     method:"POST",

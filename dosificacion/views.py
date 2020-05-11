@@ -172,7 +172,7 @@ def createUser(request):
                 if staff=='1':
                     user.is_staff=True
                     user.save()
-                    return JsonResponse({'resultado':"success",'text':"Usuario administrador correctamente"})
+                    return JsonResponse({'resultado':"success",'text':"Usuario administrador creado correctamente"})
                 else:
                     user.save()
                     return JsonResponse({'resultado':"success",'text':"Usuario creado correctamente"})

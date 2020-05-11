@@ -7,9 +7,10 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form method="POST">
+        <form method="POST" id="agregarUsuarios">
             <div class="modal-body">
                 <div class="row">
+                    {% csrf_token %}
                     <div class="col-2"></div>
                     <div class="col-3" style="text-align: right;">
                         <label for="username">Usuario:</label>

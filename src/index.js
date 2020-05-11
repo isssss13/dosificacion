@@ -1,4 +1,4 @@
-import 'morris.js/morris'
+import 'morris.js/morris.js'
 
 $(document).ready(function(){
     flujoUsuarios(flujo);

@@ -2,6 +2,7 @@ module.exports = {
 
     entry: {
         graficas: './src/index.js',
+        funciones: './src/funciones.js'
     },
 
     output: {
