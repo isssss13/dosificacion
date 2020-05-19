@@ -27,11 +27,13 @@ def flujo1():
     while True:
     	# Leemos el siguiente frame
     	ret, frame = cap.read()
+        vid1=cv2.resize(frame,(1266,600),fx=0,fy=0,interpolation = cv2.INTER_CUBIC)
+        corte=vid1[363:599, 1:626]
     	# Si hemos llegado al final del video salimos
     	if not ret:
     		break
     	# Aplicamos el algoritmo
-    	fgmask = fgbg.apply(frame)
+    	fgmask = fgbg.apply(corte)
     	# Copiamos el umbral para detectar los contornos
     	contornosimg = fgmask.copy()
     	# Buscamos contorno en la imagen
@@ -46,20 +48,16 @@ def flujo1():
             # Obtenemos el bounds del contorno, el rectangulo mayor que engloba al contorno
             (x, y, w, h) = cv2.boundingRect(c)
             # Dibujamos el rectangulo del bounds
-            rectangulo=cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+            rectangulo=cv2.rectangle(corte, (x, y), (x + w, y + h), (0, 255, 0), 2)
             if len(rectangulo):
                 conteo1+=1
         #5.Poner texto en imagen
         letrero= 'Objetos: '+ str(conteo1)
-        cv2.putText(frame,letrero,(10,150),cv2.FONT_HERSHEY_SIMPLEX,1,(255,0,0),2)
-        # Se redimenciona las pantallas 
-        vid1=cv2.resize(frame,(1266,600),fx=0,fy=0,interpolation = cv2.INTER_CUBIC)
-        vid2=cv2.resize(fgmask,(1266,600),fx=0,fy=0,interpolation = cv2.INTER_CUBIC)
-        vid3=cv2.resize(contornosimg,(1266,600),fx=0,fy=0,interpolation = cv2.INTER_CUBIC)    
-    	# Mostramos las capturas
-        cv2.imshow('Camara',vid1)
-    	# cv2.imshow('Umbral',vid2)
-    	# cv2.imshow('Contornos',vid3)
+        cv2.putText(corte,letrero,(7,5),cv2.FONT_HERSHEY_SIMPLEX,1,(255,0,0),2)
+        cv2.imshow('original',vid1)
+        cv2.imshow('Camara',corte)
+    	# cv2.imshow('Umbral',fgmask)
+    	# cv2.imshow('Contornos',contornosimg)
     	# Sentencias para salir, pulsa 's' y sale
     	k = cv2.waitKey(30) & 0xff
     	if k == ord("s"):
