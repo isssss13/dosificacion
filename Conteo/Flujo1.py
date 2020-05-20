@@ -4,14 +4,14 @@ from threading import Thread
 #Se inicializan variables globales
 conteo1=0
 promedio=0
-status1=True
-status2=False
 val1=0
 val2=0
+idCamara=1
 # Definir camara y estacion
+status1=True
+status2=False
 camara1="PruebaMetro.mp4"
 estacion="Zaragoza"
-idCamara=1
 hostRemoto="localhost"
 # Ajustar el porcentaje
 afluencia=25
