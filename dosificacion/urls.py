@@ -11,6 +11,7 @@ urlpatterns = [
     path('lineas', views.lineas, name='estaciones'),
     path('updLineas', views.uptLineas, name='actLineas'),
     path('addEstacion', views.addEstacion, name='addEstacion'),
+    path('usuarios', views.usuarios, name='usuarios'),
     path('login', views.login, name='login'),
     path('initsesion', views.iniciarSesion),
     path('logout', views.logout,name='logout'),

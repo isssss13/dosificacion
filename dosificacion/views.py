@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404,render,redirect
 from django.template import loader
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
 from .models import linea,estaciones,HistoricoAfluencia,Trenes
 from .petitions import iniciarSesion,logout,changePass,editUser,createUser,addEstacion
@@ -10,6 +11,17 @@ from .petitions import iniciarSesion,logout,changePass,editUser,createUser,addEs
 datos=linea.objects.order_by('id')# pylint: disable=no-member
 estacion=estaciones.objects.order_by('id')# pylint: disable=no-member
 listLineas=linea.objects.order_by('id')# pylint: disable=no-member
+
+
+def usuarios(request):
+    listUsuarios=User.objects.all()
+    context={
+        'nombre':'Administrar Usuarios',
+        'datos':datos,
+        'estaciones':estacion,
+        'listaUsuarios':listUsuarios
+    }
+    return render(request,'pages/usuarios.html',context)
 
 def login(request):
     return render(request,'registration/login.html')
