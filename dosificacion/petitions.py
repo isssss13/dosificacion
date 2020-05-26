@@ -16,7 +16,7 @@ def iniciarSesion(request):
         user = authenticate(username=username, password=password)
         if user is not None:
             do_login(request, user)
-            return JsonResponse({'resultado':"success",'text':"Datos Correctos"})
+            return JsonResponse({'resultado':"success",'text':"Error en los datos"})
         else:
             return JsonResponse({'resultado':"error",'text':"Error en los datos"})
 
@@ -91,3 +91,31 @@ def addEstacion(request):
             return HttpResponseRedirect(reverse('dosificacion:estaciones'))
         else:
             return HttpResponseRedirect(reverse('dosificacion:estaciones'))
+
+def desactivarUsuario(request):
+    username = request.POST.get('admin')
+    usuario = request.POST.get('usuario')
+    delUser=User.objects.get(username=usuario)
+    password = request.POST.get('passConf')
+    if request.method == "POST":
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            delUser.is_active=0
+            delUser.save()
+            return JsonResponse({'resultado':"success",'text':"Usuario eliminado"})
+        else:
+            return JsonResponse({'resultado':"error",'text':"Error en los datos"})
+
+def restablecerPassword(request):
+    username = request.POST.get('admin_P')
+    password = request.POST.get('passConf_P')
+    passReset = request.POST.get('usuario_P')
+    passUser=User.objects.get(username=passReset)
+    if request.method == "POST":
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            passUser.set_password("12345")
+            passUser.save()
+            return JsonResponse({'resultado':"success",'text':"La contraseña se reestablecio con exito"})
+        else:
+            return JsonResponse({'resultado':"error",'text':"Error en la contraseña"})

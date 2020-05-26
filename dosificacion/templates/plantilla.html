@@ -28,9 +28,6 @@
             </div>
             {% include 'modales/editusuario.html' %}
             {% include 'modales/miperfil.html' %}
-            {% if user.is_staff %}
-                {% include 'modales/addusuarios.html' %}
-            {% endif %}
         </section>
         {% include 'footer.html' %}
         <script src="{% static 'js/funciones.js' %}"></script>

@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
 from .models import linea,estaciones,HistoricoAfluencia,Trenes
-from .petitions import iniciarSesion,logout,changePass,editUser,createUser,addEstacion
+from .petitions import iniciarSesion,logout,changePass,editUser,createUser,addEstacion,desactivarUsuario,restablecerPassword
 
 datos=linea.objects.order_by('id')# pylint: disable=no-member
 estacion=estaciones.objects.order_by('id')# pylint: disable=no-member
