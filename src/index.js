@@ -5,7 +5,21 @@ $(document).ready(function(){
     // flujoTrenes(trenes);
 })
 
-const flujoUsuarios = (flujo)=>{
+const flujoUsuarios =()=>{
+    $.ajax({
+        url:"",
+        data:,
+        success:function(r){
+            if(r.resultado=="error"){
+                document.getElementById("FlujoDeUsuarios").innerHTML="Sin datos por el momento"
+            }else{
+                document.getElementById("FlujoDeUsuarios").innerHTML="Los datos estan en camino"
+            }
+        }
+    })
+}
+
+const graficas = (flujo)=>{
     let datos=flujo
     new Morris.Area({
     element: 'FlujoDeUsuarios',

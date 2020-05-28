@@ -5,7 +5,7 @@ from django.http import JsonResponse,HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate,login as do_login,logout as do_logout
 
-from .models import estaciones
+from .models import estaciones,HistoricoAfluencia
 
 def iniciarSesion(request):
     if request.user.is_authenticated:
@@ -119,3 +119,31 @@ def restablecerPassword(request):
             return JsonResponse({'resultado':"success",'text':"La contraseña se reestablecio con exito"})
         else:
             return JsonResponse({'resultado':"error",'text':"Error en la contraseña"})
+
+def cambiarPermisos(request):
+    usuario=request.POST.get('usuario_Permisos')
+    permisos=request.POST.get('permisos_Usuario')
+    changeUser=User.objects.get(username=usuario)
+    if request.method == "POST":
+        try:
+            if permisos=='0':
+                changeUser.is_staff=1
+                changeUser.is_superuser=1
+            elif permisos=='1':
+                changeUser.is_staff=1
+                changeUser.is_superuser=0
+            else:
+                changeUser.is_staff=0
+                changeUser.is_superuser=0
+            changeUser.save()
+            return JsonResponse({'resultado':"success",'text':"Usuario actualizado"})
+        except:
+            return JsonResponse({'resultado':"error",'text':"Error en la actualizacion"})
+    
+def graficas(request):
+    try:
+        grafica=HistoricoAfluencia.objects.all().filter(id_estacion=datosestacion.id).order_by('-id')[:12]
+        return JsonResponse({'resultado':"success",'text':"datos en camino"})
+    except:
+        return JsonResponse({'resultado':"error",'text':"Sin datos de la estacion por el momento"})
+
