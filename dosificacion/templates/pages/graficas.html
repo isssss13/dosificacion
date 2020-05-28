@@ -2,27 +2,12 @@
 {% load static %}
 
 {% block librerias %}
-
 <link rel="stylesheet" href="{% static 'css/morris.css' %}">
 <script>
-    const flujo=[
-        { hour: '{{ fechaaxis1|safe }}', value: '{{ data1|safe}}' },
-        { hour: '{{ fechaaxis2|safe }}', value: '{{ data2|safe}}' },
-        { hour: '{{ fechaaxis3|safe }}', value: '{{ data3|safe}}' },
-        { hour: '{{ fechaaxis4|safe }}', value: '{{ data4|safe}}' },
-        { hour: '{{ fechaaxis5|safe }}', value: '{{ data5|safe}}' },
-        { hour: '{{ fechaaxis6|safe }}', value: '{{ data6|safe}}' },
-        { hour: '{{ fechaaxis7|safe }}', value: '{{ data7|safe}}' },
-        { hour: '{{ fechaaxis8|safe }}', value: '{{ data8|safe}}' },
-        { hour: '{{ fechaaxis9|safe }}', value: '{{ data9|safe}}' },
-        { hour: '{{ fechaaxis10|safe }}', value: '{{ data10|safe}}' },
-        { hour: '{{ fechaaxis11|safe }}', value: '{{ data11|safe}}' },
-        { hour: '{{ fechaaxis12|safe }}', value: '{{ data12|safe}}' },
-    ];
+    const estacion={{ id }};
+    var token = '{{csrf_token}}';
 </script>
 <script src="{% static 'js/raphael.min.js' %}"></script>
-<script src="{% static 'js/graficas.js' %}"></script>
-
 {% endblock %}
 {% block title%}
     {{ nombre }}

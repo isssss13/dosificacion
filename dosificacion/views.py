@@ -7,7 +7,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.models import User
 
 from .models import linea,estaciones,HistoricoAfluencia,Trenes
-from .petitions import iniciarSesion,logout,changePass,editUser,createUser,addEstacion,desactivarUsuario,restablecerPassword,cambiarPermisos
+from .petitions import iniciarSesion,logout,changePass,editUser,createUser,addEstacion,desactivarUsuario,restablecerPassword,cambiarPermisos,graficas
 
 datos=linea.objects.order_by('id')# pylint: disable=no-member
 estacion=estaciones.objects.order_by('id')# pylint: disable=no-member
@@ -55,34 +55,7 @@ def lineas(request):
 def graficasEstacion(request,nameestacion):
     datosestacion=estaciones.objects.get(estacion=nameestacion)# pylint: disable=no-member
     
-    # fechaa=[
-    #     grafica[0].fecha.strftime('%Y-%m-%d %H:%M'),
-    #     grafica[1].fecha.strftime('%Y-%m-%d %H:%M'),
-    #     grafica[2].fecha.strftime('%Y-%m-%d %H:%M'),
-    #     grafica[3].fecha.strftime('%Y-%m-%d %H:%M'),
-    #     grafica[4].fecha.strftime('%Y-%m-%d %H:%M'),
-    #     grafica[5].fecha.strftime('%Y-%m-%d %H:%M'),
-    #     grafica[6].fecha.strftime('%Y-%m-%d %H:%M'),
-    #     grafica[7].fecha.strftime('%Y-%m-%d %H:%M'),
-    #     grafica[8].fecha.strftime('%Y-%m-%d %H:%M'),
-    #     grafica[9].fecha.strftime('%Y-%m-%d %H:%M'),
-    #     grafica[10].fecha.strftime('%Y-%m-%d %H:%M'),
-    #     grafica[11].fecha.strftime('%Y-%m-%d %H:%M'),
-    # ]
-    # graf=[
-    #     grafica[0].conteo,
-    #     grafica[1].conteo,
-    #     grafica[2].conteo,
-    #     grafica[3].conteo,
-    #     grafica[4].conteo,
-    #     grafica[5].conteo,
-    #     grafica[6].conteo,
-    #     grafica[7].conteo,
-    #     grafica[8].conteo,
-    #     grafica[9].conteo,
-    #     grafica[10].conteo,
-    #     grafica[11].conteo,
-    # ]
+    
     context={    
         # 'fechaaxis1':fechaa[0],
         # 'fechaaxis2':fechaa[1],
@@ -108,6 +81,7 @@ def graficasEstacion(request,nameestacion):
         # 'data10':graf[9],
         # 'data11':graf[10],
         # 'data12':graf[11],
+        'id':datosestacion.id,
         'nombre':'Estadisticas '+datosestacion.estacion,
         'datos':datos,
         'estaciones':estacion,
