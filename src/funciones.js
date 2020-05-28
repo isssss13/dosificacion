@@ -120,3 +120,51 @@ $('#iniciarSesion').on('click',()=>{
         }
     });
 });
+
+$('#delUsuario').on('submit',(e)=>{
+    e.preventDefault();
+    $.ajax({
+        method:"POST",
+        url:"/eliminarUsuario",
+        data:$('#delUsuario').serialize(),
+        success:function(r){
+            if (r.resultado=='success'){
+                Swal.fire({
+                    icon: r.resultado,
+                    title: r.text,
+                }).then((result)=>{
+                    location.reload();
+                })
+            }else{
+                Swal.fire({
+                    icon: r.resultado,
+                    title: r.text,
+                })
+            }
+        }
+    })    
+})
+
+$('#passUsuario').on('submit',(e)=>{
+    e.preventDefault();
+    $.ajax({
+        method:"POST",
+        url:"/restablecerPassword",
+        data:$('#passUsuario').serialize(),
+        success:function(r){
+            if (r.resultado=='success'){
+                Swal.fire({
+                    icon: r.resultado,
+                    title: r.text,
+                }).then((result)=>{
+                    location.reload();
+                })
+            }else{
+                Swal.fire({
+                    icon: r.resultado,
+                    title: r.text,
+                })
+            }
+        }
+    })    
+})

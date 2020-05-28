@@ -1,27 +1,101 @@
 {% extends "plantilla.html" %}
+{% load static %}
 {% block content %}
 <div class="content">
-        <div class="row align-items-center" style="padding-bottom: 2%;">
-            <div class="col">
-                <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#newUsuarios">
-                    Agregar usuarios
-                </button>
-            </div>
+    <div class="row align-items-center" style="padding-bottom: 2%;">
+        <div class="col">
+            <button type="button" class="btn btn-primary" id="agrUsuarios">
+                Agregar usuarios
+            </button>
         </div>
-        <table class="table" style="width: 100%;text-align: center;background-color: black;color:white">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Usuario</th>
-                    <th>Area</th>
-                    <th>Privilegios</th>
-                    <th>Editar</th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
+    </div>
+    <div class="row">
+        {% for list in listaUsuarios %}
+        {% if list.is_active %}
+            <div class="col-sm-6 my-2">
+                <div class="card" >
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-6">
+                                <h3>{{ list.username }}</h3>
+                            </div>
+                            <div class="col-3 ">
+                            </div>
+                            <div class="col-3">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body" style="background-color: #f48405">
+                        <div class="row">
+                            <div class="col-6">
+                                {% if list.first_name %}
+                                    <p class="card-text">{{ list.first_name }} {{ list.last_name }}</p>
+                                {% else %}
+                                    <p class="card-text">XXXXXXX XXXXXX</p>
+                                {% endif %}
+                            </div>
+                            <div class="col-6">
+                                <p class="card-text">{{ list.email }}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                {% if list.is_superuser %}
+                                    <p>Permisos:Root</p>
+                                {% elif list.is_staff %}
+                                    <p>Permisos: Administrador</p>
+                                {% else %}
+                                    <p>Permisos: Normal</p>
+                                {% endif %}
+                            </div>
+                            <div class="col-6">
+                                
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <p class="card-text">Ultimo inicio de sesion: {{ list.last_login }}</p>
+                            </div>
+                        </div>                        
+                        
+                    </div>
+                    <div class="card-footer text-muted">
+                        <div class="row">
+                            <div class="col-6">
+                            </div>
+                            <div class="col-3 ">
+                                <button class="btn btn-primary" onclick="restUsuario('{{ list.username }}')" data-toggle="modal" data-target="#changePass">Restablecer</button>
+                            </div>
+                            <div class="col-3">
+                                {% if user.is_superuser %}
+                                    <button class="btn btn-danger" id="delUser" onclick="usuario('{{ list.username }}')" data-toggle="modal" data-target="#confPass">Eliminar</button>
+                                {% else %}
+                                    {% if list.is_superuser %}
+                                        <button class="btn btn-danger" disabled>Eliminar</button>
+                                    {% else %}
+                                        <button class="btn btn-danger" id="delUser" onclick="usuario('{{ list.username }}')" data-toggle="modal" data-target="#confPass">Eliminar</button>
+                                    {% endif %}
+                                {% endif %}                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif%}
+        {% endfor %}
+    </div>
 </div>
+{% include 'modales/confPass.html' %}
 {% include 'modales/addusuarios.html' %}
+{% endblock %}
+{% block librerias %}
+<script>
+    usuario=function(user){
+        $('#usuario').val(user);
+    }
+    restUsuario=function(user){
+        $('#usuario_P').val(user);
+    }
+</script>
+
 {% endblock %}

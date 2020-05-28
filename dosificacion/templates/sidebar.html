@@ -13,9 +13,7 @@
             </a>
             <div class="collapse" id="listaAdministracion">
                 <div class="card card-body lista1" >
-                    <button type="button" class="dropdown-item" id="agrUsuarios">
-                        Agregar usuarios
-                    </button>
+                    <a class="dropdown-item" href="{% url 'dosificacion:usuarios' %}">Administrar Usuarios</a>
                     <a class="dropdown-item" href="{% url 'dosificacion:estaciones' %}">Administrar Lineas</a>
                 </div>
             </div>
