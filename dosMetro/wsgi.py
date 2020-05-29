@@ -7,7 +7,7 @@ https://docs.djangoproject.com/en/2.2/howto/deployment/wsgi/
 
 import os,sys
 
-sys.path.append('/home/server/dosificacion/dosmetro/dosificacion')
+sys.path.append('/home/server/env/dosificacion')
 
 os.environ['DJANGO_SETTINGS_MODULE'] = "dosMetro.settings"
 os.environ.setdefault("LANG", "en_US.UTF-8")
