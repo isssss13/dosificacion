@@ -37,8 +37,14 @@
                     </div>
                     <div class="col-5">
                         <select name="permisos" id="permisos">
-                            <option value="1">Administrador</option>
-                            <option value="2">Personal</option>
+                            {% if user.is_superuser %}
+                                <option value="0" selected>Root</option>
+                                <option value="1">Administrador</option>
+                                <option value="2">Personal</option>
+                            {% elif user.is_staff %}
+                                <option value="1" selected>Administrador</option>
+                                <option value="2">Personal</option>
+                            {% endif %}                            
                         </select>
                     </div>
                     <div class="col-2"></div>

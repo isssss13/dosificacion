@@ -61,11 +61,11 @@ const graficas = (flujo)=>{
 
 const saludEstacion =(conteo1,conteo2,conteo3)=>{
     if (conteo1 >= 90 || conteo2 >= 90 || conteo3 >= 90){
-        document.getElementById("informacion").innerHTML=`<p>Mal</p><img src="/static/img/Mal.png" alt=""><h6><br>Se recomienda el envio de trenes vacios a la estacion para regular la demanda</h6>`
+        document.getElementById("informacion").innerHTML=`<img src="/static/img/Mal.png" alt=""><br><p>Mal</p><h5><br>Se recomienda el envio de trenes vacios a la estacion para regular la demanda</h5><br><h5>Porcentaje actual de flujo: `+conteo1+`%</h5>`
     }else if (conteo1 >= 50 || conteo2 >= 50 || conteo3 >= 50){
-        document.getElementById("informacion").innerHTML=`<p>Regular</p><img src="/static/img/Regular.png" alt="">`
+        document.getElementById("informacion").innerHTML=`<img src="/static/img/Regular.png" alt=""><br><p>Regular</p><br><h5>Porcentaje actual de flujo`+conteo1+`%</h5>`
     }else{
-        document.getElementById("informacion").innerHTML=`<p>Correcta</p><img src="/static/img/Correcto.png" alt="">`
+        document.getElementById("informacion").innerHTML=`<img src="/static/img/Correcto.png" alt=""><br><p>Correcta</p><br><h5>Porcentaje actual de flujo`+conteo1+`%</h5>`
     }
 }
 // const flujoTrenes= (trenes) => {

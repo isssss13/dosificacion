@@ -49,11 +49,13 @@
                         </div>
                         <div class="col-5" style="text-align: left;">
                             <select name="permisos_E" id="permisos_E">
-                                {% if user.is_staff %}
+                                {% if user.is_superuser %}
+                                    <option value="0" selected>Root</option>
+                                    <option value="1">Administrador</option>
+                                    <option value="2">Personal</option>
+                                {% elif user.is_staff %}
                                     <option value="1" selected>Administrador</option>
-                                    <option value="0">Personal</option>
-                                {% else%}
-                                    <option value="0">Personal</option>
+                                    <option value="2">Personal</option>
                                 {% endif %}                            
                             </select>
                         </div>

@@ -56,6 +56,8 @@ $("#addUsuarios").on('click',(e) =>{
             Swal.fire({
                 icon: r.resultado,
                 title: r.text,
+            }).then((result)=>{
+                location.reload();
             })
         }
     });
