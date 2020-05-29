@@ -61,7 +61,17 @@
                     </div>
                     <div class="card-footer text-muted">
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-3"></div>
+                            <div class="col-3">
+                                {% if user.is_superuser %}
+                                    <button class="btn btn-primary" onclick="changeUsuario('{{ list.username }}')" data-toggle="modal" data-target="#changePermiso">Permisos</button>
+                                {% else %}
+                                    {% if list.is_superuser %}
+                                        <button class="btn btn-primary" disabled>Permisos</button>
+                                    {% else %}
+                                        <button class="btn btn-primary" onclick="changeUsuario('{{ list.username }}')" data-toggle="modal" data-target="#changePermiso">Permisos</button>
+                                    {% endif %}
+                                {% endif %}
                             </div>
                             <div class="col-3 ">
                                 <button class="btn btn-primary" onclick="restUsuario('{{ list.username }}')" data-toggle="modal" data-target="#changePass">Restablecer</button>
@@ -95,6 +105,9 @@
     }
     restUsuario=function(user){
         $('#usuario_P').val(user);
+    }
+    changeUsuario=function(user){
+        $('#usuario_Permisos').val(user);
     }
 </script>
 

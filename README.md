@@ -4,19 +4,25 @@ Django 2.2
 
 Instalar dependencias
 
+** Instalar virtualenv
+python3 -m pip install virtualenv
+
+**crear entorno virtual
+virtualenv nombredelentorno --python=python3
+
+**Iniciar ENV
+source bin/activate
+
 Instalar mysqlclient
 
 sudo apt-get install python3-dev
-sudo apt-get install python-dev default-libmysqlclient-dev
 pip install mysqlclient
+
+En caso de tener problemas con la instalacion ingresar
+sudo apt-get install libmysqlclient-dev
 
 **Instalar django
 python3 -m pip install django
-
-Instalar wsgi
-
-pip install mod-wsgi
-sudo apt-get install libapache2-mod-wsgi-py3
 
 **Poner en produccion con Apache y wsgi**
 ** instalar apache 
@@ -24,12 +30,6 @@ sudo apt-get install apache2
 
 ** Instalar wsgi
 sudo apt-get install libapache2-mod-wsgi-py3
-
-** Instalar virtualenv
-python3 -m pip install virtualenv
-
-**crear entorno virtual
-virtualenv nombredelentorno --python=python3
 
 **clonar repositorio dentro de carpeta creada de env
 git clone https://github.com/isssss13/dosificacion.git

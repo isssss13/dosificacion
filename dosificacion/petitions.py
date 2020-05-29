@@ -5,7 +5,7 @@ from django.http import JsonResponse,HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate,login as do_login,logout as do_logout
 
-from .models import estaciones
+from .models import estaciones,HistoricoAfluencia
 
 def iniciarSesion(request):
     if request.user.is_authenticated:
@@ -119,3 +119,60 @@ def restablecerPassword(request):
             return JsonResponse({'resultado':"success",'text':"La contraseña se reestablecio con exito"})
         else:
             return JsonResponse({'resultado':"error",'text':"Error en la contraseña"})
+
+def cambiarPermisos(request):
+    usuario=request.POST.get('usuario_Permisos')
+    permisos=request.POST.get('permisos_Usuario')
+    changeUser=User.objects.get(username=usuario)
+    if request.method == "POST":
+        try:
+            if permisos=='0':
+                changeUser.is_staff=1
+                changeUser.is_superuser=1
+            elif permisos=='1':
+                changeUser.is_staff=1
+                changeUser.is_superuser=0
+            else:
+                changeUser.is_staff=0
+                changeUser.is_superuser=0
+            changeUser.save()
+            return JsonResponse({'resultado':"success",'text':"Usuario actualizado"})
+        except:
+            return JsonResponse({'resultado':"error",'text':"Error en la actualizacion"})
+    
+def graficas(request):
+    estacion= request.POST.get('dato')
+    grafica=HistoricoAfluencia.objects.all().filter(id_estacion=estacion).order_by('-id')[:12]
+    try:
+        fechaa=[
+            grafica[0].fecha.strftime('%Y-%m-%d %H:%M'),
+            grafica[1].fecha.strftime('%Y-%m-%d %H:%M'),
+            grafica[2].fecha.strftime('%Y-%m-%d %H:%M'),
+            grafica[3].fecha.strftime('%Y-%m-%d %H:%M'),
+            grafica[4].fecha.strftime('%Y-%m-%d %H:%M'),
+            grafica[5].fecha.strftime('%Y-%m-%d %H:%M'),
+            grafica[6].fecha.strftime('%Y-%m-%d %H:%M'),
+            grafica[7].fecha.strftime('%Y-%m-%d %H:%M'),
+            grafica[8].fecha.strftime('%Y-%m-%d %H:%M'),
+            grafica[9].fecha.strftime('%Y-%m-%d %H:%M'),
+            grafica[10].fecha.strftime('%Y-%m-%d %H:%M'),
+            grafica[11].fecha.strftime('%Y-%m-%d %H:%M'),
+        ]
+        graf=[
+            grafica[0].conteo,
+            grafica[1].conteo,
+            grafica[2].conteo,
+            grafica[3].conteo,
+            grafica[4].conteo,
+            grafica[5].conteo,
+            grafica[6].conteo,
+            grafica[7].conteo,
+            grafica[8].conteo,
+            grafica[9].conteo,
+            grafica[10].conteo,
+            grafica[11].conteo,
+        ]
+    
+        return JsonResponse({'resultado':"success",'text':"datos en camino","fec":fechaa,"graf":graf})
+    except:
+        return JsonResponse({'resultado':"error",'text':"Sin datos de la estacion por el momento"})

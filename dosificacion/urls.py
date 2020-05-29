@@ -15,6 +15,8 @@ urlpatterns = [
     path('login', views.login, name='login'),
     path('eliminarUsuario', views.desactivarUsuario),
     path('restablecerPassword', views.restablecerPassword),
+    path('cambiarPermisos', views.cambiarPermisos),
+    path('graficas', views.graficas),
     path('initsesion', views.iniciarSesion),
     path('logout', views.logout,name='logout'),
     path('graficas/<str:nameestacion>', views.graficasEstacion,name='graficas'),

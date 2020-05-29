@@ -168,3 +168,27 @@ $('#passUsuario').on('submit',(e)=>{
         }
     })    
 })
+
+$('#PermisosUsuario').on('submit',(e)=>{
+    e.preventDefault();
+    $.ajax({
+        method:"POST",
+        url:"/cambiarPermisos",
+        data:$('#PermisosUsuario').serialize(),
+        success:function(r){
+            if (r.resultado=='success'){
+                Swal.fire({
+                    icon: r.resultado,
+                    title: r.text,
+                }).then((result)=>{
+                    location.reload();
+                })
+            }else{
+                Swal.fire({
+                    icon: r.resultado,
+                    title: r.text,
+                })
+            }
+        }
+    })
+})

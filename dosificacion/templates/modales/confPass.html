@@ -66,3 +66,47 @@
       </div>
     </div>
 </div>
+
+<div class="modal fade" id="changePermiso" tabindex="-1" role="dialog" aria-labelledby="confPass" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered " role="document">
+    <div class="modal-content">
+        <div class="modal-header" style="background-color: #333333;color: #ffffff;">
+            <h5 class="modal-title" id="addLineaLongTitle">Cambiar Permisos</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <form id="PermisosUsuario">
+            {% csrf_token %}
+            <div class="modal-body" style="align-items: center;">
+                <input type="hidden" name="usuario_Permisos" id="usuario_Permisos">
+                <div class="row align-items-center adduser">
+                    <div class="col-1"></div>
+                    <div class="col-5" style="text-align: right;">
+                        <label for="">Permisos</label>
+                    </div>
+                    <div class="col-5" style="text-align: left;">
+                        <select name="permisos_Usuario" id="permisos_Usuario">
+                            {% if user.is_superuser %}
+                                <option value="0" selected>Root</option>
+                                <option value="1">Administrador</option>
+                                <option value="2">Personal</option>
+                            {% elif user.is_staff %}
+                                <option value="1" selected>Administrador</option>
+                                <option value="2">Personal</option>
+                            {% endif %}                            
+                        </select>
+                    </div>
+                    <div class="col-1"></div>
+              </div>
+          </div>
+          <div class="modal-footer" style="background-color: #333333;color: #ffffff;">
+              <button class="btn btn-light" data-toggle="modal" data-dismiss="modal">
+                  Cerrar
+              </button>
+              <input type="submit" class="btn btn-primary" value="Actualizar">
+          </div>
+      </form>
+    </div>
+  </div>
+</div>
