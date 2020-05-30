@@ -69,11 +69,19 @@ def createUser(request):
         if request.method == "POST":
             try:
                 user=User.objects.create_user(nickname,correo,passw)
-                if staff=='1':
+                if staff=='0':
+                    user.is_staff=1
+                    user.is_superuser=1
+                    user.save()
+                    return JsonResponse({'resultado':"success",'text':"Usuario Root creado correctamente"})
+                elif staff=='1':
                     user.is_staff=True
+                    user.is_superuser=0
                     user.save()
                     return JsonResponse({'resultado':"success",'text':"Usuario administrador creado correctamente"})
                 else:
+                    user.is_staff=0
+                    user.is_superuser=0
                     user.save()
                     return JsonResponse({'resultado':"success",'text':"Usuario creado correctamente"})
             except:

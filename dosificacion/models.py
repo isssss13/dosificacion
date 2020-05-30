@@ -13,9 +13,6 @@ class linea(models.Model):
 class estaciones(models.Model):
     estacion=models.CharField(max_length=50)
     statusSistema=models.BooleanField()
-    afluencia=models.CharField(max_length=200)
-    ip_camara1=models.CharField(max_length=100)
-    ip_camara2=models.CharField(max_length=100)
     id_linea=models.ForeignKey(linea, on_delete=models.CASCADE)
 
 class HistoricoAfluencia(models.Model):

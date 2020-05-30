@@ -1,3 +1,4 @@
+import * as Swal from 'sweetalert2'
 import 'morris.js/morris.js'
 
 $(document).ready(function(){
@@ -16,8 +17,9 @@ const flujoUsuarios =()=>{
         success:function(r){
             if(r.resultado=="error"){
                 document.getElementById("FlujoDeUsuarios").innerHTML="Sin datos por el momento"
+                document.getElementById("informacion").innerHTML="Sin datos por el momento"
             }else{
-                console.log(r.fec)
+                // console.log(r.fec)
                 const flujo=[
                     { hour: r.fec[0], value: r.graf[0] },
                     { hour: r.fec[1], value: r.graf[1] },
@@ -33,6 +35,7 @@ const flujoUsuarios =()=>{
                     { hour: r.fec[11], value: r.graf[11] },
                 ];
                 graficas(flujo);
+                saludEstacion(r.graf[0],r.graf[1],r.graf[2]);
                 // document.getElementById("FlujoDeUsuarios").innerHTML="Los datos estan en camino"
             }
         }
@@ -54,6 +57,16 @@ const graficas = (flujo)=>{
     }).on('click',properties=>{
         console.log(datos)
     });
+}
+
+const saludEstacion =(conteo1,conteo2,conteo3)=>{
+    if (conteo1 >= 90 || conteo2 >= 90 || conteo3 >= 90){
+        document.getElementById("informacion").innerHTML=`<img src="/static/img/Mal.png" alt=""><br><p>Mal</p><h5><br>Se recomienda el envio de trenes vacios a la estacion para regular la demanda</h5><br><h5>Porcentaje actual de flujo: `+conteo1+`%</h5>`
+    }else if (conteo1 >= 50 || conteo2 >= 50 || conteo3 >= 50){
+        document.getElementById("informacion").innerHTML=`<img src="/static/img/Regular.png" alt=""><br><p>Regular</p><br><h5>Porcentaje actual de flujo`+conteo1+`%</h5>`
+    }else{
+        document.getElementById("informacion").innerHTML=`<img src="/static/img/Correcto.png" alt=""><br><p>Correcta</p><br><h5>Porcentaje actual de flujo`+conteo1+`%</h5>`
+    }
 }
 // const flujoTrenes= (trenes) => {
 //     let datos=trenes

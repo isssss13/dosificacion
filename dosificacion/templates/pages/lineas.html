@@ -17,11 +17,9 @@
                 <table class="table" style="width: 100%;text-align: center;">
                     <thead>
                         <tr>
+                            <th>Linea</th>
                             <th>Nombre de la estacion</th>
                             <th>Status Sistema de dosificacion</th>
-                            <th>Ip Camara 1</th>
-                            <th>Ip Camara 2</th>
-                            <th>Afluencia</th>
                             <th>Editar</th>
                         </tr>
                     </thead>
@@ -32,15 +30,13 @@
                             {% else %}
                                 <tr>
                             {% endif %}
+                                <td>{{ estacion.id_linea_id }}</td>
                                 <td>{{ estacion.estacion }}</td>
                                 {% if estacion.statusSistema %}
                                     <td>Activo</td>
                                 {% else %}
                                     <td>Desactivado</td>
                                 {% endif %}
-                                <td>{{ estacion.ip_camara1 }}</td>
-                                <td>{{ estacion.ip_camara2 }}</td>
-                                <td>{{ estacion.afluencia }}</td>
                                 <td style="width: 3%;padding-top: 1%;padding-bottom: 1%;">
                                     <button class="btn btn-primary" onclick="editEstacion('{{ estacion.id }}','{{ estacion.estacion }}','estacion.statusSistema','{{ estacion.id_linea_id}}','{{ estacion.ip_camara1 }}','{{ estacion.ip_camara2 }}')" data-toggle="modal" data-target="#updLineas">
                                         <img src="{% static 'img/edit.png'%}" style="width: 100%;">

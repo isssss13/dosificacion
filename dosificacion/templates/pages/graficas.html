@@ -19,36 +19,11 @@
     <div class="row text-center">
         <div class="col-md-6">
             <div class="card-body">
-                    <p class="card-title">Informacion del servicio</p>
-                    <div class="card-text" id="informacion">
-                        {% if data1 >= 90 or data2 >= 90 or data3 >= 90 %}
-                            <p>Mal</p>
-                            <img src="{% static 'img/Mal.png' %}" alt="">
-                            <h6><br>Se recomienda el envio de trenes vacios a la estacion para regular la demanda</h6>
-                        {% elif data1 >= 50 or data2 >= 50 or data3 >= 50 %}
-                            <p>Regular</p>
-                            <img src="{% static 'img/Regular.png' %}" alt="">
-                        {% else %}
-                            <p>Correcta</p>
-                            <img src="{% static 'img/Correcto.png' %}" alt="">
-                        {% endif %}
-                    </div class="card-title">
-                    <p>Informacion de la Estacion</p>
-                    <div class="card-text">
-                        <p>Camara 1: {{ ipcamara1 }}</p>
-                        <p>Camara 2: {{ ipcamara2 }}</p>
-                    </div>
+                    <h4 class="card-title">Informacion del servicio</h4>
+                    <div class="card-text" id="informacion"></div>
                 </div>
         </div>
-        <!-- <div class="col-md-6">
-            <div class="card-body">
-                <p class="card-title">Flujo de trenes</p>
-                <div class="card-text" id="Trenes"></div>
-            </div>
-        </div> -->
-    </div>
-    <div class="row text-center">
-        <div class="col-md-12">
+        <div class="col-md-6">
             <div class="card-body">
                 <h4 class="card-title">Flujo de Usuarios</h4>
                 <div class="card-text" id="FlujoDeUsuarios"></div>
