@@ -43,17 +43,12 @@ def editUser(request):
     nombre=request.POST.get('nombre_E')
     apellidos=request.POST.get('app_E')
     correo=request.POST.get('correo_E')
-    staff=request.POST.get('permisos_E')
     if request.method == "POST":
         try:
             user=User.objects.get(pk=id)
             user.first_name=nombre
             user.last_name=apellidos
             user.email=correo
-            if staff=='1':
-                user.is_staff=True
-            else:
-                user.is_staff=False
             user.save()
             return JsonResponse({'resultado':"success",'text':"Datos actualizados correctamente"})
         except:
