@@ -10,11 +10,11 @@ idCamara=1
 # Definir camara y estacion
 status1=True
 status2=False
-camara1="PruebaMetro.mp4"
+camara1=0
 estacion="Zaragoza"
-hostRemoto="localhost"
+hostRemoto="192.168.100.220"
 # Ajustar el porcentaje
-afluencia=25
+afluencia=100
 
 def flujo1():
     global conteo1
@@ -42,7 +42,7 @@ def flujo1():
         letrero= 'Objetos: '+ str(conteo1)
         cv2.putText(corte,letrero,(12,30),cv2.FONT_HERSHEY_SIMPLEX,1,(255,0,0),2)
         # cv2.imshow('original',vid1)
-        cv2.imshow('Camara',corte)
+        # cv2.imshow('Camara',corte)
     	# cv2.imshow('Umbral',fgmask)
     	# cv2.imshow('Contornos',contornosimg)
     	k = cv2.waitKey(30) & 0xff
@@ -97,7 +97,7 @@ def algoritmo():
         mycursor.execute(sql, val)
         mydb.commit()
         print(mycursor.rowcount, "Valor insertado a base remota")
-        time.sleep(10)
+        time.sleep(60)
         
 # Cambiar valores de status1 y status2
 def valores1():
