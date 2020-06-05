@@ -58,8 +58,8 @@ def conexion():
         val = (conteo1,idCamara)
         mycursor.execute(sql, val)
         mydb.commit()
-        print(mycursor.rowcount, "record inserted.")
-        time.sleep(10)
+        # print(mycursor.rowcount, "record inserted.")
+        time.sleep(1)
 
 def conteo():
     if __name__ == "__main__":
