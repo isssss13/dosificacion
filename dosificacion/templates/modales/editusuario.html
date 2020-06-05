@@ -42,25 +42,6 @@
                         </div>
                         <div class="col-1"></div>
                     </div>
-                    <div class="row align-items-center">
-                        <div class="col-1"></div>
-                        <div class="col-5" style="text-align: center;">
-                            <label for="">Permisos</label>
-                        </div>
-                        <div class="col-5" style="text-align: left;">
-                            <select name="permisos_E" id="permisos_E">
-                                {% if user.is_superuser %}
-                                    <option value="0" selected>Root</option>
-                                    <option value="1">Administrador</option>
-                                    <option value="2">Personal</option>
-                                {% elif user.is_staff %}
-                                    <option value="1" selected>Administrador</option>
-                                    <option value="2">Personal</option>
-                                {% endif %}                            
-                            </select>
-                        </div>
-                        <div class="col-1"></div>
-                    </div>
                 </div>
             </div>
             <div class="modal-footer" style="background-color: #333333;color: #ffffff;">
