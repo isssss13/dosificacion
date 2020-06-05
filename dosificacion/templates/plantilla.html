@@ -13,6 +13,15 @@
         <script src="{% static 'js/jquery.min.js' %}"></script>
         <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
         {% block librerias %}
+        <style type="text/css">
+            body{
+                background-image:url({% static 'img/Metro.jpg'%});
+                background-size: cover;
+            }
+            #page-content-wrapper{
+                opacity: 0.5;                
+            }
+        </style>
         {% endblock %}
     </head>
     <body>
@@ -20,9 +29,8 @@
         <section>
             <div class="d-flex" id="wrapper">            
                 {% include 'sidebar.html' %}
-                <div id="page-content-wrapper">                    
+                <div id="page-content-wrapper">
                     {% block content %}
-                        
                     {% endblock %}
                 </div>
             </div>

@@ -12,6 +12,12 @@
     <link href="{% static 'css/dash.css' %}" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <title>Dosificacion-Login</title>
+    <style>
+        body{
+                background-image:url({% static 'img/Metro.jpg'%});
+                background-size: cover;
+            }
+    </style>
 </head>
 <body>
     <header>
@@ -29,7 +35,7 @@
         </nav>
     </header>
     <section>
-        <div class="container loginContainer">
+        <div class="container loginContainer" >
             <form method="POST" class="cuadro" id="loginUsuario">
                 {% csrf_token %}
                 <div class="row">
