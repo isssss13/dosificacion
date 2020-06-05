@@ -10,11 +10,12 @@ idCamara=1
 # Definir camara y estacion
 status1=True
 status2=False
-camara1="video.mp4"
+camara1="PruebaMetro.mp4"
 estacion="Zaragoza"
 hostRemoto="localhost"
 # Ajustar el porcentaje
 afluencia=100
+parametroAlerta=80
 
 def flujo1():
     global conteo1
@@ -64,8 +65,8 @@ def conexion():
         val = (conteo1,idCamara)
         mycursor.execute(sql, val)
         mydb.commit()
-        print(mycursor.rowcount, "record inserted.")
-        time.sleep(10)
+        # print(mycursor.rowcount, "record inserted.")
+        time.sleep(1)
 
 # Promedia los valores recabados y los manda a la base de datos remota donde se encuentra alojado el programa de dosificacion
 def algoritmo():
@@ -81,27 +82,21 @@ def algoritmo():
         cam1=valores1()
         cam2=valores2()
         datosR=cam1+cam2
-        print("valor "+format(cam1))
-        if(afluencia<datosR):
-            afluencia=datosR
-        elif(afluencia>datosR):
-            if(afluencia<25):
-                afluencia=25
-            else:
-                afluencia=(afluencia+datosR)/2
         promedio=((cam1+cam2)*100)/afluencia
-        print(afluencia)
-        print(str(promedio)+'%')
+        # print(str(promedio)+'%')
+        if (promedio>100):
+            promedio=100
         mycursor = mydb.cursor()
         sql = "INSERT INTO `dosificacion_historicoafluencia`(`fecha`, `conteo`, `id_estacion_id`) VALUES (now(),%s,(SELECT `id` from `dosificacion_estaciones` WHERE `estacion`=%s))"
         val = (promedio,estacion)
-        # mycursor.execute(sql, val)
-        # mydb.commit()
+        mycursor.execute(sql, val)
+        mydb.commit()
         print(mycursor.rowcount, "Valor insertado a base remota")
-        time.sleep(5)
+        time.sleep(600)
         
 # Cambiar valores de status1 y status2
 def valores1():
+    global val1
     mydb = mysql.connector.connect(
         host="localhost",
         user="root",
@@ -109,17 +104,15 @@ def valores1():
         database="dosificacion_estacion"
     )
     if(status1==True):
-        val1=0
         mycursor = mydb.cursor()
-        mycursor.execute("select `valores` from flujohistorico where `id_camara`=1 order by id DESC limit 3")
-        myresult = mycursor.fetchall()
-        for row in myresult:
-            val1=val1+int(row[0])
-        print("total"+format(val1))
-        # =int(myresult[0])
+        mycursor.execute("select sum(`valores`) from flujohistorico where `id_camara`=1")
+        myresult = mycursor.fetchone()
+        val1=+int(myresult[0])
+        limpiar()
         return val1
 
 def valores2():
+    global val2
     mydb = mysql.connector.connect(
         host="localhost",
         user="root",
@@ -127,37 +120,62 @@ def valores2():
         database="dosificacion_estacion"
     )
     if(status2==True):
-        global val2
         mycursor = mydb.cursor()
-        mycursor.execute("select `valores` from flujohistorico where `id_camara`=2 order by id DESC limit 1")
-        myresult = mycursor.fetchone()
-        val2=int(myresult[0])
+        mycursor.execute("select sum(`valores`) from flujohistorico where `id_camara`=2")
+        myresult = mycursor.fetchall()
+        val2=+int(myresult[0])
         return val2
     else:
         return val2
 
-def alerta():
-    global promedio
+def limpiar():
     mydb = mysql.connector.connect(
         host="localhost",
         user="root",
         passwd="root",
         database="dosificacion_estacion"
     )
+    mycursor = mydb.cursor()
+    mycursor.execute("DELETE FROM `flujohistorico`")
+    mydb.commit()
+
+def alerta():
+    global promedio
+    alerta=0
+    mydb = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        passwd="root",
+        database="dosificacion_estacion"
+    )
+    mydb2 = mysql.connector.connect(
+        host=hostRemoto,
+        user="root",
+        passwd="root",
+        database="dosificacion"
+    )
     while True:
-        if(promedio>70):
+        global parametroAlerta
+        mycursor = mydb.cursor()
+        mycursor.execute("select `valores` from flujohistorico ORDER BY `id` DESC LIMIT 60")
+        myresult = mycursor.fetchall()
+        for row in myresult:
+            alerta+=int(row[0])
+        mydb.commit()
+        if(alerta>parametroAlerta):
             mycursor = mydb.cursor()
             sql = "UPDATE alerta SET status = 1,inicio=now()"
             mycursor.execute(sql)
-            mydb.commit()
+            mydb.commit()            
             print("Alerta activa")
-            time.sleep(10)
+            time.sleep(60)
         else:
             mycursor = mydb.cursor()
             sql = "UPDATE alerta SET status = 0"
             mycursor.execute(sql)
             mydb.commit()
-            time.sleep(80)
+            print("Alerta inactiva")
+            time.sleep(10)
             
 def conteo():
     if __name__ == "__main__":
@@ -188,12 +206,10 @@ def comprobacion():
     mycursor.execute("select count(*) from alerta")
     myresult = mycursor.fetchone()
     result=int(myresult[0])
-    print(result)
     if(result==0):
         mycursor = mydb.cursor()
         sql2 = "INSERT INTO `alerta`(`status`, `inicio`, `id_estacion`) VALUES (0,now(),%s)"
         val = (idCamara,)
-        print (val)
         mycursor.execute(sql2, val)
         mydb.commit()
         print(mycursor.rowcount, "record inserted.")
