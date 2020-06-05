@@ -10,9 +10,9 @@ idCamara=1
 # Definir camara y estacion
 status1=True
 status2=False
-camara1=0
+camara1="video.mp4"
 estacion="Zaragoza"
-hostRemoto="192.168.100.220"
+hostRemoto="localhost"
 # Ajustar el porcentaje
 afluencia=100
 
@@ -42,7 +42,7 @@ def flujo1():
         letrero= 'Objetos: '+ str(conteo1)
         cv2.putText(corte,letrero,(12,30),cv2.FONT_HERSHEY_SIMPLEX,1,(255,0,0),2)
         # cv2.imshow('original',vid1)
-        # cv2.imshow('Camara',corte)
+        cv2.imshow('Camara',corte)
     	# cv2.imshow('Umbral',fgmask)
     	# cv2.imshow('Contornos',contornosimg)
     	k = cv2.waitKey(30) & 0xff
@@ -81,6 +81,7 @@ def algoritmo():
         cam1=valores1()
         cam2=valores2()
         datosR=cam1+cam2
+        print("valor "+format(cam1))
         if(afluencia<datosR):
             afluencia=datosR
         elif(afluencia>datosR):
@@ -94,10 +95,10 @@ def algoritmo():
         mycursor = mydb.cursor()
         sql = "INSERT INTO `dosificacion_historicoafluencia`(`fecha`, `conteo`, `id_estacion_id`) VALUES (now(),%s,(SELECT `id` from `dosificacion_estaciones` WHERE `estacion`=%s))"
         val = (promedio,estacion)
-        mycursor.execute(sql, val)
-        mydb.commit()
+        # mycursor.execute(sql, val)
+        # mydb.commit()
         print(mycursor.rowcount, "Valor insertado a base remota")
-        time.sleep(60)
+        time.sleep(5)
         
 # Cambiar valores de status1 y status2
 def valores1():
@@ -108,10 +109,14 @@ def valores1():
         database="dosificacion_estacion"
     )
     if(status1==True):
+        val1=0
         mycursor = mydb.cursor()
-        mycursor.execute("select `valores` from flujohistorico where `id_camara`=1 order by id DESC limit 1")
-        myresult = mycursor.fetchone()
-        val1=int(myresult[0])
+        mycursor.execute("select `valores` from flujohistorico where `id_camara`=1 order by id DESC limit 3")
+        myresult = mycursor.fetchall()
+        for row in myresult:
+            val1=val1+int(row[0])
+        print("total"+format(val1))
+        # =int(myresult[0])
         return val1
 
 def valores2():
