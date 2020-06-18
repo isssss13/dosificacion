@@ -26,6 +26,8 @@ def usuarios(request):
     return render(request,'pages/usuarios.html',context)
 
 def login(request):
+    if request.user.is_authenticated:
+        return redirect('/')
     return render(request,'registration/login.html')
 
 @login_required(login_url='/login')
