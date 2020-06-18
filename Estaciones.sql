@@ -1,7 +1,17 @@
 insert into dosificacion_linea (`nombreLinea`,`colorLinea`,`no_estaciones`) values
 ('Linea 1', 'Rosa', 20),
 ('Linea 2', 'Azul', 0),
-('Linea 3', 'Verde', 0);
+('Linea 3', 'Verde Olivo', 0),
+('Linea 4', 'Cian', 0),
+('Linea 5', 'Amarillo', 0),
+('Linea 6', 'Rojo', 0),
+('Linea 7', 'Naranja', 0),
+('Linea 8', 'Verde', 0),
+('Linea 9', 'Cafe', 0),
+('Linea A', 'Morado', 0),
+('Linea B', 'Verde/Gris', 0),
+('Linea 12', 'Oro', 0);
+
 insert into dosificacion_estaciones(`estacion`,`statusSistema`,`id_linea_id`) 
 values 
 ('Pantitlan',0,1),
